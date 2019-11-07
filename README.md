@@ -12,27 +12,26 @@ This repository contains the R code to fit the models described in the paper ent
 
 ## Figures
 
-- [Figure 1.](https://github.com/spatialstatisticsupna/Mmodels_comparison_article/blob/master/figures/figure_1.pdf): Map of the administrative division of Uttar Pradesh into districts and its location in India (top right corner)
+- [Figure 1.](https://github.com/spatialstatisticsupna/Mmodels_comparison_article/blob/master/figures/figure_1.pdf) Map of the administrative division of Uttar Pradesh into districts and its location in India (top right corner)
 
-- [Figure 2.](https://github.com/spatialstatisticsupna/Mmodels_comparison_article/blob/master/figures/figure_2.pdf): Evolution of the crude rates (per 100000 women) of rapes and dowry deaths in Uttar Pradesh in the period 2001-2014
+- [Figure 2.](https://github.com/spatialstatisticsupna/Mmodels_comparison_article/blob/master/figures/figure_2.pdf) Evolution of the crude rates (per 100000 women) of rapes and dowry deaths in Uttar Pradesh in the period 2001-2014
 
-- [Figure 3.](https://github.com/spatialstatisticsupna/Mmodels_comparison_article/blob/master/figures/figure_3.pdf): Dispersion plots of the final relative risks for rapes and dowry deaths obtained with the Type II interaction RE M-model with in INLA (y-axis) vs. WinBUGS (x-axis), using the iCAR (first row), pCAR (second row), LCAR (third row) and the BYM (last row) spatial priors
+- [Figure 3.](https://github.com/spatialstatisticsupna/Mmodels_comparison_article/blob/master/figures/figure_3.pdf) Dispersion plots of the final relative risks for rapes and dowry deaths obtained with the Type II interaction RE M-model with in INLA (y-axis) vs. WinBUGS (x-axis), using the iCAR (first row), pCAR (second row), LCAR (third row) and the BYM (last row) spatial priors
 
-- [Figure 4.](https://github.com/spatialstatisticsupna/Mmodels_comparison_article/blob/master/figures/figure_4.pdf): Posterior mean of the district-specific spatial risk, $\exp(\theta_{ij})$ (left column), and the exceedence probabilities, i.e., P(exp(theta_ij)>1|O) (right column), for rape (top) and dowry deaths (bottom)
+- [Figure 4.](https://github.com/spatialstatisticsupna/Mmodels_comparison_article/blob/master/figures/figure_4.pdf) Posterior mean of the district-specific spatial risk, $\exp(\theta_{ij})$ (left column), and the exceedence probabilities, i.e., P(exp(theta_ij)>1|O) (right column), for rape (top) and dowry deaths (bottom)
 
-- [Figure 5.](https://github.com/spatialstatisticsupna/Mmodels_comparison_article/blob/master/figures/figure_5.pdf): Temporal pattern of incidence risks (posterior means of exp(gamma_tj) ) for rape  and dowry deaths in Uttar Pradesh
+- [Figure 5.](https://github.com/spatialstatisticsupna/Mmodels_comparison_article/blob/master/figures/figure_5.pdf) Temporal pattern of incidence risks (posterior means of exp(gamma_tj) ) for rape  and dowry deaths in Uttar Pradesh
 
-- [Figure 6.](https://github.com/spatialstatisticsupna/Mmodels_comparison_article/blob/master/figures/figure_6.pdf): Map of estimated incidence risks for rape (top) and  posterior probabilities that the relative risk is greater than one (P(R_itj >1|O) ) (bottom) in Uttar Pradesh
+- [Figure 6.](https://github.com/spatialstatisticsupna/Mmodels_comparison_article/blob/master/figures/figure_6.pdf) Map of estimated incidence risks for rape (top) and  posterior probabilities that the relative risk is greater than one (P(R_itj >1|O) ) (bottom) in Uttar Pradesh
 
-- [Figure 7.](https://github.com/spatialstatisticsupna/Mmodels_comparison_article/blob/master/figures/figure_7.pdf): Map of estimated incidence risks for dowry deaths (top) and  posterior probabilities that the relative risk is greater than one (P(R_itj >1|O) ) (bottom) in Uttar Pradesh 
+- [Figure 7.](https://github.com/spatialstatisticsupna/Mmodels_comparison_article/blob/master/figures/figure_7.pdf) Map of estimated incidence risks for dowry deaths (top) and  posterior probabilities that the relative risk is greater than one (P(R_itj >1|O) ) (bottom) in Uttar Pradesh 
 
-- [Figure 8.](https://github.com/spatialstatisticsupna/Mmodels_comparison_article/blob/master/figures/figure_8.pdf): Temporal evolution of final risk estimates for rape and dowry deaths in some districts in Uttar Pradesh: Ghazlabad, Kheri, Mainpuri, Sant Kabir Nagar, and Varanasi
+- [Figure 8.](https://github.com/spatialstatisticsupna/Mmodels_comparison_article/blob/master/figures/figure_8.pdf) Temporal evolution of final risk estimates for rape and dowry deaths in some districts in Uttar Pradesh: Ghazlabad, Kheri, Mainpuri, Sant Kabir Nagar, and Varanasi
 
 ## Tables
 
 - **Table 1.** Descriptive statistics. Minimum (min), first quartile (q1), mean, third quartile (q3), maximum (max), standard desviation (sd), and coefficient of variation (cv) of the number of rapes and dowry deaths in the districts of Uttar Pradesh per year
 
-|	   |     |    | Rapes |   |     |    |    |     |    |Dowry deaths | | | | |
 | Year | min | q1 | mean | q3 | max | sd | cv | min | q1 | mean | q3 | max | sd | cv |
 | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | 2001 |  1 | 13.0 | 27.9 | 41.0 | 93 | 21.5 | 0.8 |  4 | 18.0 | 31.6 | 43.8 | 88 | 19.0 | 0.6 |
