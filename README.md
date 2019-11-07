@@ -140,8 +140,8 @@ This repository contains the R code to fit the models described in the paper ent
 - **Table A.2.** Posterior means, standard deviations, and 95\% credible intervals for the crime-specific intercepts (alpha_j, j=1,2) of the models with a spatio-temporal Type II interaction term
 
 |		|				|		|	 	 |    | FE 	  |  	  | 	 | 	  | RE    |  |
-|		|				|		|	mean | sd | q.025 | q.975 | mean | sd | q.025 | q.975 |
 | :---	| :---			| :---	| ---: 	|---: |---: |---: |---: |---: |---: |---: |
+|		|				|		| **mean** | **sd** | **q.025** | **q.975** | **mean** | **sd** | **q.025** | **q.975** |
 | iCAR 	| Rape 			| MCMC  | -0.187 | 0.008 | -0.203 | -0.170 | -0.186 | 0.008 | -0.201 | -0.169 |
 |      	|      			| INLA  | -0.186 | 0.008 | -0.203 | -0.170 | -0.185 | 0.008 | -0.202 | -0.169  |
 |      	| Dowry deaths 	| MCMC 	| -0.061 | 0.007 | -0.075 | -0.047 | -0.061 | 0.007 | -0.076 | -0.046 |
@@ -163,8 +163,8 @@ This repository contains the R code to fit the models described in the paper ent
 - **Table A.3.** Posterior means, standard deviations, and 95\% credible intervals for the hyperparameters of the models with a spatio-temporal Type II interaction term
  
  |   |       |           |      | INLA  |      |      | MCMC  |       |
-|   | Model | Parameter | mean | q.025 | q.975| mean | q.025 | q.975 |
 | :---	| :---		  | :---	      | ---:  |---:   |---:   |  ---: |---:   |---:   |
+|   | **Model** | **Parameter** | **mean** | **q.025** | **q.975** | **mean** | **q.025** | **q.975** |
 | iCAR  | FE M-models | sigma_delta_1 | 0.212 | 0.187 | 0.233 | 0.210 | 0.190 | 0.232 |
 |       | 	          | sigma_delta_2 | 0.093 | 0.080 | 0.107 | 0.093 | 0.080 | 0.108 |
 |       | RE M-models | sigma_theta   | 0.605 | 0.268 | 1.343 | 0.669 | 0.266 | 1.748 |
