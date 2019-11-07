@@ -34,8 +34,3 @@ Similarly for the other models considered in the paper.
 
 
 The file [fit_models_JRSSA.R](https://github.com/spatialstatisticsupna/Mmodels_comparison_article/blob/master/R/fit_models_JRSSA.R) allows you to fit all the models described in the paper.
-
-
-
-
-
