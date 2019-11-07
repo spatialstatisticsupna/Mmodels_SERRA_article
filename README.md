@@ -33,7 +33,6 @@ This repository contains the R code to fit the models described in the paper ent
 - **Table 1.** Descriptive statistics. Minimum (min), first quartile (q1), mean, third quartile (q3), maximum (max), standard desviation (sd), and coefficient of variation (cv) of the number of rapes and dowry deaths in the districts of Uttar Pradesh per year
 
 | Year | min | q1 | mean | q3 | max | sd | cv | min | q1 | mean | q3 | max | sd | cv |
-| ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | Year | min | q1 | mean | q3 | max | sd | cv | min | q1 | mean | q3 | max | sd | cv |
 | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | 2001 |  1 | 13.0 | 27.9 | 41.0 | 93 | 21.5 | 0.8 |  4 | 18.0 | 31.6 | 43.8 | 88 | 19.0 | 0.6 |
