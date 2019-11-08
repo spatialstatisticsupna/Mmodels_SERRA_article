@@ -88,7 +88,7 @@ This repository contains the R code to fit the models described in the paper ent
 | 		|  				| Type II 	| 12358.354 | 12392.021 | 6339.574 |
 | 		|  				| Type III 	| 12663.113 | 12715.302 | 6623.690 |
 | 		|  				| Type IV 	| 12396.433 | 12455.568 | 6366.125 |
-| RE M-models			| Additive 	| 14159.901 | 14412.886 | 7210.686 |
+|		| RE M-models	| Additive 	| 14159.901 | 14412.886 | 7210.686 |
 | 		|  				| Type I 	| 12609.721 | 12522.181 | 6609.431 |
 | 		|  				| Type II 	| 12354.983 | 12374.041 | 6337.927 |
 | 		|  				| Type III 	| 12657.593 | 12696.315 | 6621.781 |
