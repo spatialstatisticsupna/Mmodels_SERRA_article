@@ -8,7 +8,7 @@ DirMain<-""     # Set an appropiate directory
 setwd(DirMain)
 
 ## libraries
-library(spdep); library(INLA)
+library(spdep); library(INLA); library(abind)
 library(pbugs) # For running the models in parallel calls to WinBUGS
 
 ### save results
@@ -31,6 +31,7 @@ crimes<- c("rape", "dowry")
 ## Number of areas and number of time periods
 n<- length(unique(datos$ID_area))
 t<- length(unique(datos$ID_year))
+
 
 ## array with observed cases
 Obs<- datos[,c(crimes,"ID_area","ID_year")]   
@@ -174,6 +175,6 @@ t.resulta.winbugs.bym.fe<- list(bym.ad.fe=t.resulta.fe.fe.bym.ad,
                                 bym.t3.fe=t.resulta.fe.fe.bym.t3,
                                 bym.t4.fe=t.resulta.fe.fe.bym.t4)
 
-save(resulta.winbugs.bym.fe, t.resulta.winbugs.bym.fe, file =paste0("resul/",gsub("\\.", "_", "resulta.winbugs.bym.fe"),".RData"))
+save(resulta.winbugs.bym.fe, t.resulta.winbugs.bym.fe, file=paste0("resul/",gsub("\\.", "_", "resulta.winbugs.bym.fe"),".RData"))
 ################################################################################
 ################################################################################

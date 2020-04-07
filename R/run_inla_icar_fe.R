@@ -129,7 +129,7 @@ return(logdens+log_jacobian)"
 ################################################################################
 ## load functions                                                             ##
 ################################################################################
-source("functions_INLA/inla_rgeneric_Mmodel_model_icar.R") # icar
+source("functions/inla_rgeneric_Mmodel_model_icar.R") # icar
 model.s <- inla.rgeneric.define(inla.rgeneric.Mmodel.model.icar, debug = TRUE, k = k, W = W, alpha.min = alpha.min, alpha.max = alpha.max)
 model.t <- inla.rgeneric.define(inla.rgeneric.Mmodel.model.icar, debug = TRUE, k = k, W = W.t, alpha.min = alpha.min, alpha.max = alpha.max)
 
@@ -228,7 +228,7 @@ icar.t4.fe.fe <- inla(OBS ~ -1 + I1 + I2 +
 ########################################
 resulta.inla.icar.fe<- list(icar.ad.fe=icar.ad.fe.fe,
                             icar.t1.fe=icar.t1.fe.fe,
-                            icar.t2.fe=icar.t1.fe.fe,
+                            icar.t2.fe=icar.t2.fe.fe,
                             icar.t3.fe=icar.t3.fe.fe,
                             icar.t4.fe=icar.t4.fe.fe)
 save(resulta.inla.icar.fe, file=paste0("resul/", gsub("\\.", "_", "resulta.inla.icar.fe"), ".RData" ) )

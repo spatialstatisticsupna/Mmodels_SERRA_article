@@ -129,10 +129,9 @@ return(logdens+log_jacobian)"
 ################################################################################
 ## load functions                                                             ##
 ################################################################################
-source("functions_INLA/inla_rgeneric_Mmodel_model_lcar.R") # lcar
+source("functions/inla_rgeneric_Mmodel_model_lcar.R") # lcar
 model.s <- inla.rgeneric.define(inla.rgeneric.Mmodel.model.lcar, debug = TRUE, k = k, W = W, alpha.min = alpha.min, alpha.max = alpha.max)
-
-source("../functions_INLA/inla_rgeneric_Mmodel_model_icar.R") # icar
+source("functions/inla_rgeneric_Mmodel_model_icar.R") # icar
 model.t <- inla.rgeneric.define(inla.rgeneric.Mmodel.model.icar, debug = TRUE, k = k, W = W.t, alpha.min = alpha.min, alpha.max = alpha.max)
 
 ################################################################################
@@ -230,7 +229,7 @@ lcar.t4.fe.fe <- inla(OBS ~ -1 + I1 + I2 +
 ########################################
 resulta.inla.lcar.fe<- list(lcar.ad.fe=lcar.ad.fe.fe,
                             lcar.t1.fe=lcar.t1.fe.fe,
-                            lcar.t2.fe=lcar.t1.fe.fe,
+                            lcar.t2.fe=lcar.t2.fe.fe,
                             lcar.t3.fe=lcar.t3.fe.fe,
                             lcar.t4.fe=lcar.t4.fe.fe)
 save(resulta.inla.lcar.fe, file=paste0("resul/", gsub("\\.", "_", "resulta.inla.lcar.fe"), ".RData" ) )

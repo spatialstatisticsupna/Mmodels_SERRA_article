@@ -1,8 +1,8 @@
 # R code
 
-This folder contains the necessary R functions to fit the multivariate spatio-temporal models described in Vicente et al. (2019), and to reproduce the results.
+This folder contains the necessary R functions to fit the multivariate spatio-temporal models described in Vicente et al. (2020), and to reproduce the results.
 
-The [dataMmodel.RData](https://github.com/spatialstatisticsupna/Mmodels_comparison_article/blob/master/R/dataMmodel.RData) file contains the following R objects:
+The [dataMmodel.RData](https://github.com/spatialstatisticsupna/Mmodels_SERRA_article/blob/master/R/dataMmodel.RData) file contains the following R objects:
 
 - ```data```: contains the data set used. It is a dataframe with the following variables,
 	- **dist**: Districts
@@ -26,8 +26,8 @@ The [dataMmodel.RData](https://github.com/spatialstatisticsupna/Mmodels_comparis
 
 - ```Mzz```: is the upper triangular matrix of the Cholesky decomposition of the inverse of the temporal neighborhood matrix
 
-The file [reproduce_paper_Mmodels.R](https://github.com/spatialstatisticsupna/Mmodels_comparison_article/blob/master/R/reproduce_paper_Mmodels.R) permit to reproduce the results given in the paper.
+The file [reproduce_paper_Mmodels.R](https://github.com/spatialstatisticsupna/Mmodels_SERRA_article/blob/master/R/reproduce_paper_Mmodels.R) permit to reproduce the results given in the paper.
 
 
-The [run_inla_bym_fe.R](https://github.com/spatialstatisticsupna/Mmodels_comparison_article/blob/master/R/run_inla_bym_fe.R) and [run_winbugs_bym_fe.R](https://github.com/spatialstatisticsupna/Mmodels_comparison_article/blob/master/R/run_winbugs_bym_fe.R) files allow you to adjust the fixed-effect M-models with a BYM model for the spatial random effect, using INLA and MCMC respectively.
+The [run_inla_bym_fe.R](https://github.com/spatialstatisticsupna/Mmodels_SERRA_article/blob/master/R/run_inla_bym_fe.R) and [run_winbugs_bym_fe.R](https://github.com/spatialstatisticsupna/Mmodels_SERRA_article/blob/master/R/run_winbugs_bym_fe.R) files allow you to adjust the fixed-effect M-models with a BYM model for the spatial random effect, using INLA and MCMC respectively.
 Similarly for the other models considered in the paper.

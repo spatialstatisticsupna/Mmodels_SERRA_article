@@ -8,7 +8,7 @@ DirMain<-""     # Set an appropiate directory
 setwd(DirMain)
 
 ## libraries
-library(spdep); library(INLA)
+library(spdep); library(INLA); library(abind)
 library(pbugs) # For running the models in parallel calls to WinBUGS
 
 ### save results
@@ -69,7 +69,7 @@ rm(l)
 ################################################################################
 ## load functions                                                             ##
 ################################################################################
-source("functions_WinBUGS/nva_nva_bym_spaciotemporal_functions.R") # functions (models)
+source("functions/nva_nva_bym_spaciotemporal_functions.R") # functions (models)
 
 ## bugs.directory
 bugs.dir<- c("") # Set an appropiate directory

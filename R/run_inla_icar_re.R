@@ -129,7 +129,7 @@ return(logdens+log_jacobian)"
 ################################################################################
 ## load functions                                                             ##
 ################################################################################
-source("functions_INLA/inla_rgeneric_Mmodel_model_icar_normal.R") # icar
+source("functions/inla_rgeneric_Mmodel_model_icar_normal.R") # icar
 model.s <- inla.rgeneric.define(inla.rgeneric.Mmodel.model.icar.n, debug = TRUE, k = k, W = W, alpha.min = alpha.min, alpha.max = alpha.max)
 model.t <- inla.rgeneric.define(inla.rgeneric.Mmodel.model.icar.n, debug = TRUE, k = k, W = W.t, alpha.min = alpha.min, alpha.max = alpha.max)
 
