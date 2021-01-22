@@ -26,12 +26,14 @@ The [dataMmodel.RData](https://github.com/spatialstatisticsupna/Mmodels_SERRA_ar
 
 - ```Mzz```: is the upper triangular matrix of the Cholesky decomposition of the inverse of the temporal neighborhood matrix
 
-The file [reproduce_paper_Mmodels.R](https://github.com/spatialstatisticsupna/Mmodels_SERRA_article/blob/master/R/reproduce_paper_Mmodels.R) permit to reproduce the results given in the paper.
 
+The file [reproduce_paper_Mmodels.R](https://github.com/spatialstatisticsupna/Mmodels_SERRA_article/blob/master/R/reproduce_paper_Mmodels.R) permit to reproduce the results given in the paper.
 
 The [functions](https://github.com/spatialstatisticsupna/Mmodels_SERRA_article/blob/master/R/functions) folder contains the necessary functions to fit M-models using INLA and WinBUGS.
 
-The [run_inla_bym_fe.R](https://github.com/spatialstatisticsupna/Mmodels_SERRA_article/blob/master/R/run_inla_bym_fe.R) and [run_winbugs_bym_fe.R](https://github.com/spatialstatisticsupna/Mmodels_SERRA_article/blob/master/R/run_winbugs_bym_fe.R) files allow you to adjust the fixed-effect M-models with a BYM model for the spatial random effect, using INLA and MCMC respectively.
+The [run_Mmodels_inla.R](https://github.com/spatialstatisticsupna/Mmodels_SERRA_article/blob/master/R/run_Mmodels_inla.R) files allow you to adjust the fixed/random-effect M-models using INLA.
+
+The [run_winbugs_bym_fe.R](https://github.com/spatialstatisticsupna/Mmodels_SERRA_article/blob/master/R/run_winbugs_bym_fe.R) files allow you to adjust the fixed-effect M-models with a BYM model for the spatial random effect, using MCMC.
 Similarly for the other models considered in the paper.
 
  
