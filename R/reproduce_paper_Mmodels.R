@@ -1,38 +1,42 @@
-##################################################################################
-################             Spatio-temporal M-models             ################
-##################################################################################
+################################################################################
+## Title: Bayesian inference in multivariate spatio-temporal areal models     ##
+##        using INLA: analysis of gender-based violence in small areas        ##
+##                                                                            ##
+## Authors: Vicente, G. - Goicoa, T. -  Ugarte, M.D.                          ##
+##                                                                            ##
+## https://doi.org/10.1007/s00477-020-01808-x                                 ##
+##                                                                            ##
+################################################################################
+##                          Spatio-temporal M-models                          ##
+################################################################################
 rm(list=ls())
-
-## Working directory
-DirMain<- ""     # Set an appropiate directory
-setwd(DirMain)
 
 ## libraries
 library(sp); library(sf); library(tmap); library(tmaptools); library(INLA)
 library(RColorBrewer); library(grid)
 
 ## Load data and Uttar Pradesh SpatialPolygonsDataFrame
-load("dataMmodel.RData")
+load("./dataMmodel.RData")
 
 ####################################
 ##  Data organization
 ####################################
 ## Crimes
-crime<- c("rape", "dowry")
-e_crime<- paste0("e_", crime)
-crime_name<- c("Rapes", "Dowry deaths")
+crime <- c("rape", "dowry")
+e_crime <- paste0("e_", crime)
+crime_name <- c("Rapes", "Dowry deaths")
 
 ## Number of crimes
-k<- length(crime)
+k <- length(crime)
 
 ## Number of areas and number of time periods
-n<- length(unique(data$ID_area))
-t<- length(unique(data$ID_year))
+n <- length(unique(data$ID_area))
+t <- length(unique(data$ID_year))
 x <- 1:t
 
 ## Initial and final time periods
-t.from<- min(data$year)
-t.to<- max(data$year)
+t.from <- min(data$year)
+t.to <- max(data$year)
 
 ## data.frame INLA
 data<- data[order(data$ID_year, data$ID_area),]
@@ -69,7 +73,9 @@ d.data_frame$idxy<- d.data_frame$ID_area + (d.data_frame$ID_year-1)*n
 idxy.<- paste0("idxy.", 1:k)
 d.data_frame[idxy.]<- NA
 for(i in 1:k){
-  d.data_frame[d.data_frame$ID_disease==i, idxy.[i]]<- (d.data_frame[d.data_frame$ID_disease==i, c("ID_year")]-1)*n+d.data_frame[d.data_frame$ID_disease==i, c("ID_area")]
+  d.data_frame[d.data_frame$ID_disease==i, idxy.[i]]<- 
+    (d.data_frame[d.data_frame$ID_disease==i, c("ID_year")]-1)*n +
+    d.data_frame[d.data_frame$ID_disease==i, c("ID_area")]
 }
 
 ## rm
@@ -90,24 +96,41 @@ load("resul/resulta_inla_pcar_re.RData")  # RE (pcar)
 
 resulta.inla<- list(
   ## icar-fe
-  icar.ad.fe=resulta.inla.icar.fe$icar.ad.fe, icar.t1.fe=resulta.inla.icar.fe$icar.t1.fe, icar.t2.fe=resulta.inla.icar.fe$icar.t2.fe, icar.t3.fe=resulta.inla.icar.fe$icar.t3.fe, icar.t4.fe=resulta.inla.icar.fe$icar.t4.fe,
+  icar.ad.fe=resulta.inla.icar.fe$icar.ad.fe, icar.t1.fe=resulta.inla.icar.fe$icar.t1.fe,
+  icar.t2.fe=resulta.inla.icar.fe$icar.t2.fe, icar.t3.fe=resulta.inla.icar.fe$icar.t3.fe,
+  icar.t4.fe=resulta.inla.icar.fe$icar.t4.fe,
   ## icar-re
-  icar.ad.re=resulta.inla.icar.re$icar.ad.re, icar.t1.re=resulta.inla.icar.re$icar.t1.re, icar.t2.re=resulta.inla.icar.re$icar.t2.re, icar.t3.re=resulta.inla.icar.re$icar.t3.re, icar.t4.re=resulta.inla.icar.re$icar.t4.re,
+  icar.ad.re=resulta.inla.icar.re$icar.ad.re, icar.t1.re=resulta.inla.icar.re$icar.t1.re,
+  icar.t2.re=resulta.inla.icar.re$icar.t2.re, icar.t3.re=resulta.inla.icar.re$icar.t3.re,
+  icar.t4.re=resulta.inla.icar.re$icar.t4.re,
   ## pcar-fe
-  pcar.ad.fe=resulta.inla.pcar.fe$pcar.ad.fe, pcar.t1.fe=resulta.inla.pcar.fe$pcar.t1.fe, pcar.t2.fe=resulta.inla.pcar.fe$pcar.t2.fe, pcar.t3.fe=resulta.inla.pcar.fe$pcar.t3.fe, pcar.t4.fe=resulta.inla.pcar.fe$pcar.t4.fe,
+  pcar.ad.fe=resulta.inla.pcar.fe$pcar.ad.fe, pcar.t1.fe=resulta.inla.pcar.fe$pcar.t1.fe, 
+  pcar.t2.fe=resulta.inla.pcar.fe$pcar.t2.fe,  pcar.t3.fe=resulta.inla.pcar.fe$pcar.t3.fe, 
+  pcar.t4.fe=resulta.inla.pcar.fe$pcar.t4.fe,
   ## pcar-re
-  pcar.ad.re=resulta.inla.pcar.re$pcar.ad.re, pcar.t1.re=resulta.inla.pcar.re$pcar.t1.re, pcar.t2.re=resulta.inla.pcar.re$pcar.t2.re, pcar.t3.re=resulta.inla.pcar.re$pcar.t3.re, pcar.t4.re=resulta.inla.pcar.re$pcar.t4.re,
+  pcar.ad.re=resulta.inla.pcar.re$pcar.ad.re, pcar.t1.re=resulta.inla.pcar.re$pcar.t1.re, 
+  pcar.t2.re=resulta.inla.pcar.re$pcar.t2.re, pcar.t3.re=resulta.inla.pcar.re$pcar.t3.re, 
+  pcar.t4.re=resulta.inla.pcar.re$pcar.t4.re,
   ## lcar-fe
-  lcar.ad.fe=resulta.inla.lcar.fe$lcar.ad.fe, lcar.t1.fe=resulta.inla.lcar.fe$lcar.t1.fe, lcar.t2.fe=resulta.inla.lcar.fe$lcar.t2.fe, lcar.t3.fe=resulta.inla.lcar.fe$lcar.t3.fe, lcar.t4.fe=resulta.inla.lcar.fe$lcar.t4.fe,
+  lcar.ad.fe=resulta.inla.lcar.fe$lcar.ad.fe, lcar.t1.fe=resulta.inla.lcar.fe$lcar.t1.fe, 
+  lcar.t2.fe=resulta.inla.lcar.fe$lcar.t2.fe, lcar.t3.fe=resulta.inla.lcar.fe$lcar.t3.fe, 
+  lcar.t4.fe=resulta.inla.lcar.fe$lcar.t4.fe,
   ## lcar-re
-  lcar.ad.re=resulta.inla.lcar.re$lcar.ad.re, lcar.t1.re=resulta.inla.lcar.re$lcar.t1.re, lcar.t2.re=resulta.inla.lcar.re$lcar.t2.re, lcar.t3.re=resulta.inla.lcar.re$lcar.t3.re, lcar.t4.re=resulta.inla.lcar.re$lcar.t4.re,
+  lcar.ad.re=resulta.inla.lcar.re$lcar.ad.re, lcar.t1.re=resulta.inla.lcar.re$lcar.t1.re, 
+  lcar.t2.re=resulta.inla.lcar.re$lcar.t2.re, lcar.t3.re=resulta.inla.lcar.re$lcar.t3.re, 
+  lcar.t4.re=resulta.inla.lcar.re$lcar.t4.re,
   ## bym-fe
-  bym.ad.fe=resulta.inla.bym.fe$bym.ad.fe, bym.t1.fe=resulta.inla.bym.fe$bym.t1.fe, bym.t2.fe=resulta.inla.bym.fe$bym.t2.fe, bym.t3.fe=resulta.inla.bym.fe$bym.t3.fe, bym.t4.fe=resulta.inla.bym.fe$bym.t4.fe,
+  bym.ad.fe=resulta.inla.bym.fe$bym.ad.fe, bym.t1.fe=resulta.inla.bym.fe$bym.t1.fe, 
+  bym.t2.fe=resulta.inla.bym.fe$bym.t2.fe, bym.t3.fe=resulta.inla.bym.fe$bym.t3.fe,
+  bym.t4.fe=resulta.inla.bym.fe$bym.t4.fe,
   ## bym-re
-  bym.ad.re=resulta.inla.bym.re$bym.ad.re, bym.t1.re=resulta.inla.bym.re$bym.t1.re, bym.t2.re=resulta.inla.bym.re$bym.t2.re, bym.t3.re=resulta.inla.bym.re$bym.t3.re, bym.t4.re=resulta.inla.bym.re$bym.t4.re)
+  bym.ad.re=resulta.inla.bym.re$bym.ad.re, bym.t1.re=resulta.inla.bym.re$bym.t1.re, 
+  bym.t2.re=resulta.inla.bym.re$bym.t2.re, bym.t3.re=resulta.inla.bym.re$bym.t3.re, 
+  bym.t4.re=resulta.inla.bym.re$bym.t4.re)
 
 ## rm
-rm(list = c(paste0("resulta.inla.", c("icar", "lcar", "pcar", "bym"), rep(c(".fe", ".re"),each=4))))
+rm(list = c(paste0("resulta.inla.", c("icar", "lcar", "pcar", "bym"),
+                   rep(c(".fe", ".re"),each=4))))
 
 ## WinBUGS
 load("resul/resulta_winbugs_bym_fe.RData")   # FE (bym)
@@ -119,46 +142,81 @@ load("resul/resulta_winbugs_pcar_re.RData")   # RE (pcar)
 load("resul/resulta_winbugs_lcar_fe.RData")   # FE (lcar)
 load("resul/resulta_winbugs_lcar_re.RData")   # RE (lcar)
 
+
 resulta.winbugs<- list(
   ## icar-fe
-  icar.ad.fe=resulta.winbugs.icar.fe$icar.ad.fe, icar.t1.fe=resulta.winbugs.icar.fe$icar.t1.fe, icar.t2.fe=resulta.winbugs.icar.fe$icar.t2.fe, icar.t3.fe=resulta.winbugs.icar.fe$icar.t3.fe, icar.t4.fe=resulta.winbugs.icar.fe$icar.t4.fe,
+  icar.ad.fe=resulta.winbugs.icar.fe$icar.ad.fe, icar.t1.fe=resulta.winbugs.icar.fe$icar.t1.fe, 
+  icar.t2.fe=resulta.winbugs.icar.fe$icar.t2.fe, icar.t3.fe=resulta.winbugs.icar.fe$icar.t3.fe, 
+  icar.t4.fe=resulta.winbugs.icar.fe$icar.t4.fe,
   ## icar-re
-  icar.ad.re=resulta.winbugs.icar.re$icar.ad.re, icar.t1.re=resulta.winbugs.icar.re$icar.t1.re, icar.t2.re=resulta.winbugs.icar.re$icar.t2.re, icar.t3.re=resulta.winbugs.icar.re$icar.t3.re, icar.t4.re=resulta.winbugs.icar.re$icar.t4.re,
+  icar.ad.re=resulta.winbugs.icar.re$icar.ad.re, icar.t1.re=resulta.winbugs.icar.re$icar.t1.re, 
+  icar.t2.re=resulta.winbugs.icar.re$icar.t2.re, icar.t3.re=resulta.winbugs.icar.re$icar.t3.re, 
+  icar.t4.re=resulta.winbugs.icar.re$icar.t4.re,
   ## pcar-fe
-  pcar.ad.fe=resulta.winbugs.pcar.fe$pcar.ad.fe, pcar.t1.fe=resulta.winbugs.pcar.fe$pcar.t1.fe, pcar.t2.fe=resulta.winbugs.pcar.fe$pcar.t2.fe, pcar.t3.fe=resulta.winbugs.pcar.fe$pcar.t3.fe, pcar.t4.fe=resulta.winbugs.pcar.fe$pcar.t4.fe,
+  pcar.ad.fe=resulta.winbugs.pcar.fe$pcar.ad.fe, pcar.t1.fe=resulta.winbugs.pcar.fe$pcar.t1.fe,
+  pcar.t2.fe=resulta.winbugs.pcar.fe$pcar.t2.fe, pcar.t3.fe=resulta.winbugs.pcar.fe$pcar.t3.fe, 
+  pcar.t4.fe=resulta.winbugs.pcar.fe$pcar.t4.fe,
   ## pcar-re
-  pcar.ad.re=resulta.winbugs.pcar.re$pcar.ad.re, pcar.t1.re=resulta.winbugs.pcar.re$pcar.t1.re, pcar.t2.re=resulta.winbugs.pcar.re$pcar.t2.re, pcar.t3.re=resulta.winbugs.pcar.re$pcar.t3.re, pcar.t4.re=resulta.winbugs.pcar.re$pcar.t4.re,
+  pcar.ad.re=resulta.winbugs.pcar.re$pcar.ad.re, pcar.t1.re=resulta.winbugs.pcar.re$pcar.t1.re, 
+  pcar.t2.re=resulta.winbugs.pcar.re$pcar.t2.re, pcar.t3.re=resulta.winbugs.pcar.re$pcar.t3.re,
+  pcar.t4.re=resulta.winbugs.pcar.re$pcar.t4.re,
   ## lcar-fe
-  lcar.ad.fe=resulta.winbugs.lcar.fe$lcar.ad.fe, lcar.t1.fe=resulta.winbugs.lcar.fe$lcar.t1.fe, lcar.t2.fe=resulta.winbugs.lcar.fe$lcar.t2.fe, lcar.t3.fe=resulta.winbugs.lcar.fe$lcar.t3.fe, lcar.t4.fe=resulta.winbugs.lcar.fe$lcar.t4.fe,
+  lcar.ad.fe=resulta.winbugs.lcar.fe$lcar.ad.fe, lcar.t1.fe=resulta.winbugs.lcar.fe$lcar.t1.fe, 
+  lcar.t2.fe=resulta.winbugs.lcar.fe$lcar.t2.fe, lcar.t3.fe=resulta.winbugs.lcar.fe$lcar.t3.fe,
+  lcar.t4.fe=resulta.winbugs.lcar.fe$lcar.t4.fe,
   ## lcar-re
-  lcar.ad.re=resulta.winbugs.lcar.re$lcar.ad.re, lcar.t1.re=resulta.winbugs.lcar.re$lcar.t1.re, lcar.t2.re=resulta.winbugs.lcar.re$lcar.t2.re, lcar.t3.re=resulta.winbugs.lcar.re$lcar.t3.re, lcar.t4.re=resulta.winbugs.lcar.re$lcar.t4.re,
+  lcar.ad.re=resulta.winbugs.lcar.re$lcar.ad.re, lcar.t1.re=resulta.winbugs.lcar.re$lcar.t1.re, 
+  lcar.t2.re=resulta.winbugs.lcar.re$lcar.t2.re, lcar.t3.re=resulta.winbugs.lcar.re$lcar.t3.re, 
+  lcar.t4.re=resulta.winbugs.lcar.re$lcar.t4.re,
   ## bym-fe
-  bym.ad.fe=resulta.winbugs.bym.fe$bym.ad.fe, bym.t1.fe=resulta.winbugs.bym.fe$bym.t1.fe, bym.t2.fe=resulta.winbugs.bym.fe$bym.t2.fe, bym.t3.fe=resulta.winbugs.bym.fe$bym.t3.fe, bym.t4.fe=resulta.winbugs.bym.fe$bym.t4.fe,
+  bym.ad.fe=resulta.winbugs.bym.fe$bym.ad.fe, bym.t1.fe=resulta.winbugs.bym.fe$bym.t1.fe, 
+  bym.t2.fe=resulta.winbugs.bym.fe$bym.t2.fe, bym.t3.fe=resulta.winbugs.bym.fe$bym.t3.fe,
+  bym.t4.fe=resulta.winbugs.bym.fe$bym.t4.fe,
   ## bym-re
-  bym.ad.re=resulta.winbugs.bym.re$bym.ad.re, bym.t1.re=resulta.winbugs.bym.re$bym.t1.re, bym.t2.re=resulta.winbugs.bym.re$bym.t2.re, bym.t3.re=resulta.winbugs.bym.re$bym.t3.re, bym.t4.re=resulta.winbugs.bym.re$bym.t4.re)
+  bym.ad.re=resulta.winbugs.bym.re$bym.ad.re, bym.t1.re=resulta.winbugs.bym.re$bym.t1.re, 
+  bym.t2.re=resulta.winbugs.bym.re$bym.t2.re, bym.t3.re=resulta.winbugs.bym.re$bym.t3.re, 
+  bym.t4.re=resulta.winbugs.bym.re$bym.t4.re)
 
 
 t.resulta.winbugs<- list(
   ## icar-fe
-  icar.ad.fe=t.resulta.winbugs.icar.fe$icar.ad.fe, icar.t1.fe=t.resulta.winbugs.icar.fe$icar.t1.fe, icar.t2.fe=t.resulta.winbugs.icar.fe$icar.t2.fe, icar.t3.fe=t.resulta.winbugs.icar.fe$icar.t3.fe, icar.t4.fe=t.resulta.winbugs.icar.fe$icar.t4.fe,
+  icar.ad.fe=t.resulta.winbugs.icar.fe$icar.ad.fe, icar.t1.fe=t.resulta.winbugs.icar.fe$icar.t1.fe,
+  icar.t2.fe=t.resulta.winbugs.icar.fe$icar.t2.fe, icar.t3.fe=t.resulta.winbugs.icar.fe$icar.t3.fe, 
+  icar.t4.fe=t.resulta.winbugs.icar.fe$icar.t4.fe,
   ## icar-re
-  icar.ad.re=t.resulta.winbugs.icar.re$icar.ad.re, icar.t1.re=t.resulta.winbugs.icar.re$icar.t1.re, icar.t2.re=t.resulta.winbugs.icar.re$icar.t2.re, icar.t3.re=t.resulta.winbugs.icar.re$icar.t3.re, icar.t4.re=t.resulta.winbugs.icar.re$icar.t4.re,
+  icar.ad.re=t.resulta.winbugs.icar.re$icar.ad.re, icar.t1.re=t.resulta.winbugs.icar.re$icar.t1.re, 
+  icar.t2.re=t.resulta.winbugs.icar.re$icar.t2.re, icar.t3.re=t.resulta.winbugs.icar.re$icar.t3.re, 
+  icar.t4.re=t.resulta.winbugs.icar.re$icar.t4.re,
   ## pcar-fe
-  pcar.ad.fe=t.resulta.winbugs.pcar.fe$pcar.ad.fe, pcar.t1.fe=t.resulta.winbugs.pcar.fe$pcar.t1.fe, pcar.t2.fe=t.resulta.winbugs.pcar.fe$pcar.t2.fe, pcar.t3.fe=t.resulta.winbugs.pcar.fe$pcar.t3.fe, pcar.t4.fe=t.resulta.winbugs.pcar.fe$pcar.t4.fe,
+  pcar.ad.fe=t.resulta.winbugs.pcar.fe$pcar.ad.fe, pcar.t1.fe=t.resulta.winbugs.pcar.fe$pcar.t1.fe, 
+  pcar.t2.fe=t.resulta.winbugs.pcar.fe$pcar.t2.fe, pcar.t3.fe=t.resulta.winbugs.pcar.fe$pcar.t3.fe, 
+  pcar.t4.fe=t.resulta.winbugs.pcar.fe$pcar.t4.fe,
   ## pcar-re
-  pcar.ad.re=t.resulta.winbugs.pcar.re$pcar.ad.re, pcar.t1.re=t.resulta.winbugs.pcar.re$pcar.t1.re, pcar.t2.re=t.resulta.winbugs.pcar.re$pcar.t2.re, pcar.t3.re=t.resulta.winbugs.pcar.re$pcar.t3.re, pcar.t4.re=t.resulta.winbugs.pcar.re$pcar.t4.re,
+  pcar.ad.re=t.resulta.winbugs.pcar.re$pcar.ad.re, pcar.t1.re=t.resulta.winbugs.pcar.re$pcar.t1.re, 
+  pcar.t2.re=t.resulta.winbugs.pcar.re$pcar.t2.re, pcar.t3.re=t.resulta.winbugs.pcar.re$pcar.t3.re, 
+  pcar.t4.re=t.resulta.winbugs.pcar.re$pcar.t4.re,
   ## lcar-fe
-  lcar.ad.fe=t.resulta.winbugs.lcar.fe$lcar.ad.fe, lcar.t1.fe=t.resulta.winbugs.lcar.fe$lcar.t1.fe, lcar.t2.fe=t.resulta.winbugs.lcar.fe$lcar.t2.fe, lcar.t3.fe=t.resulta.winbugs.lcar.fe$lcar.t3.fe, lcar.t4.fe=t.resulta.winbugs.lcar.fe$lcar.t4.fe,
+  lcar.ad.fe=t.resulta.winbugs.lcar.fe$lcar.ad.fe, lcar.t1.fe=t.resulta.winbugs.lcar.fe$lcar.t1.fe, 
+  lcar.t2.fe=t.resulta.winbugs.lcar.fe$lcar.t2.fe, lcar.t3.fe=t.resulta.winbugs.lcar.fe$lcar.t3.fe, 
+  lcar.t4.fe=t.resulta.winbugs.lcar.fe$lcar.t4.fe,
   ## lcar-re
-  lcar.ad.re=t.resulta.winbugs.lcar.re$lcar.ad.re, lcar.t1.re=t.resulta.winbugs.lcar.re$lcar.t1.re, lcar.t2.re=t.resulta.winbugs.lcar.re$lcar.t2.re, lcar.t3.re=t.resulta.winbugs.lcar.re$lcar.t3.re, lcar.t4.re=t.resulta.winbugs.lcar.re$lcar.t4.re,
+  lcar.ad.re=t.resulta.winbugs.lcar.re$lcar.ad.re, lcar.t1.re=t.resulta.winbugs.lcar.re$lcar.t1.re, 
+  lcar.t2.re=t.resulta.winbugs.lcar.re$lcar.t2.re, lcar.t3.re=t.resulta.winbugs.lcar.re$lcar.t3.re, 
+  lcar.t4.re=t.resulta.winbugs.lcar.re$lcar.t4.re,
   ## bym-fe
-  bym.ad.fe=t.resulta.winbugs.bym.fe$bym.ad.fe, bym.t1.fe=t.resulta.winbugs.bym.fe$bym.t1.fe, bym.t2.fe=t.resulta.winbugs.bym.fe$bym.t2.fe, bym.t3.fe=t.resulta.winbugs.bym.fe$bym.t3.fe, bym.t4.fe=t.resulta.winbugs.bym.fe$bym.t4.fe,
+  bym.ad.fe=t.resulta.winbugs.bym.fe$bym.ad.fe, bym.t1.fe=t.resulta.winbugs.bym.fe$bym.t1.fe, 
+  bym.t2.fe=t.resulta.winbugs.bym.fe$bym.t2.fe, bym.t3.fe=t.resulta.winbugs.bym.fe$bym.t3.fe,
+  bym.t4.fe=t.resulta.winbugs.bym.fe$bym.t4.fe,
   ## bym-re
-  bym.ad.re=t.resulta.winbugs.bym.re$bym.ad.re, bym.t1.re=t.resulta.winbugs.bym.re$bym.t1.re, bym.t2.re=t.resulta.winbugs.bym.re$bym.t2.re, bym.t3.re=t.resulta.winbugs.bym.re$bym.t3.re, bym.t4.re=t.resulta.winbugs.bym.re$bym.t4.re)
+  bym.ad.re=t.resulta.winbugs.bym.re$bym.ad.re, bym.t1.re=t.resulta.winbugs.bym.re$bym.t1.re, 
+  bym.t2.re=t.resulta.winbugs.bym.re$bym.t2.re, bym.t3.re=t.resulta.winbugs.bym.re$bym.t3.re, 
+  bym.t4.re=t.resulta.winbugs.bym.re$bym.t4.re)
 
 ## rm
-rm(list = c(paste0("resulta.winbugs.", c("icar", "lcar", "pcar", "bym"), rep(c(".fe", ".re"),each=4))))
-rm(list = c(paste0("t.resulta.winbugs.", c("icar", "lcar", "pcar", "bym"), rep(c(".fe", ".re"),each=4))))
+rm(list = c(paste0("resulta.winbugs.", c("icar", "lcar", "pcar", "bym"), 
+                   rep(c(".fe", ".re"),each=4))))
+rm(list = c(paste0("t.resulta.winbugs.", c("icar", "lcar", "pcar", "bym"), 
+                   rep(c(".fe", ".re"),each=4))))
 
 ####################################
 ##  Selected model
@@ -201,20 +259,24 @@ rm(list = c("map_india", "map_up"))
 ##            dowry deaths in Uttar Pradesh in the period 2001-2014
 ####################################
 ## crude rates (per 100000 women)
-crude_rates<- 100000* aggregate(data[,c("rape", "dowry")], by=list(data$ID_year), FUN=sum)[,c("rape", "dowry")]/ aggregate(data[,c("pop")], by=list(data$ID_year), FUN=sum)[,2]
+crude_rates <- 100000*
+  aggregate(data[,c("rape", "dowry")], by=list(data$ID_year), FUN=sum)[,c("rape", "dowry")]/ 
+  aggregate(data[,c("pop")], by=list(data$ID_year), FUN=sum)[,2]
 
 ## minimum and maximum values
-inf<- round(min(crude_rates))
-top<- round(max(crude_rates))
+inf <- round(min(crude_rates))
+top <- round(max(crude_rates))
 
 ## color
 selected_colors<- c("chocolate1", "tomato4")
 
 ## pdf figure 2
 pdf("figure_2.pdf", height=5, width=7.5, onefile=FALSE)
-plot(t.from:t.to, crude_rates[,"rape"], type="l", xlab ="",ylab ="", ylim=c(inf, top), col=selected_colors[1], cex.axis=1, lwd=4)
+plot(t.from:t.to, crude_rates[,"rape"], type="l", xlab ="",ylab ="", 
+     ylim=c(inf, top), col=selected_colors[1], cex.axis=1, lwd=4)
 lines(t.from:t.to, crude_rates[,"dowry"], col=selected_colors[2],lwd=4)
-legend("topleft",  crime_name, ncol=1, pch=c("-", "-"), col=selected_colors, bty="n",lwd=c(4,4), cex=1.2)
+legend("topleft",  crime_name, ncol=1, pch=c("-", "-"), 
+       col=selected_colors, bty="n",lwd=c(4,4), cex=1.2)
 dev.off()
 
 ## rm
@@ -233,7 +295,8 @@ par(mfrow=c(4,2), oma = c(0, 2, 2, 0))
 spatial <-c("icar", "pcar", "lcar", "bym")
 selected_colors<- c("darkorchid4", "olivedrab4") # color
 for(i in 1:length(spatial)){
-  eval(parse(text= paste0("d.data_frame$risks<-resulta.inla$", spatial[i],".t2.re$summary.fitted.values$mean")))
+  eval(parse(text= paste0("d.data_frame$risks<-resulta.inla$", 
+                          spatial[i],".t2.re$summary.fitted.values$mean")))
   aux<-c()
   eval(parse(text = paste0("aux<-resulta.winbugs$",spatial[i], ".t2.re$mean$SMR")))
   for(j in 1:k){
@@ -269,12 +332,16 @@ paleta <- brewer.pal(8,"YlOrRd")
 inf<- min(spatial)
 top<- max(spatial)
 values<- c(round(seq(inf, 1, length.out = 5),2), round(seq(1, top, length.out = 5),2)[-1] )
-for(j in 1:length(crime)){ eval(parse(text=paste0("carto_use$spatial_",crime[j], "<- spatial[(n*(",j-1,")+1):(n*",j,")]"))) }
+for(j in 1:length(crime)){
+  eval(parse(text=paste0("carto_use$spatial_",crime[j], "<- spatial[(n*(",j-1,")+1):(n*",j,")]")))
+}
+
 Rates.spat<- list()
 for(j in 1:length(crime)){
   Rates.spat[[j]]<- tm_shape(carto_use) +
     tm_polygons(col=paste("spatial_",crime[j],sep=""), 
-                palette=paleta, title="", legend.show=T, legend.reverse=T, style="fixed", breaks=values, interval.closure="left") +
+                palette=paleta, title="", legend.show=T, legend.reverse=T, 
+                style="fixed", breaks=values, interval.closure="left") +
     tm_layout(main.title=crime_name[j], main.title.position="center", legend.text.size=1)
 }
 
@@ -282,11 +349,16 @@ for(j in 1:length(crime)){
 prob_spatial<- unlist(lapply(resulta$marginals.random$idx, function(x){1-inla.pmarginal(0, x)}))
 paleta.p <- brewer.pal(5,"PuBu")
 values.p <- c(0,0.1,0.2,0.8,0.9,1)
-for(j in 1:length(crime)){ eval(parse(text=paste0("carto_use$prob_spatial_",crime[j], "<- prob_spatial[(n*(",j-1,")+1):(n*",j,")]"))) }
+for(j in 1:length(crime)){
+  eval(parse(text=paste0("carto_use$prob_spatial_",crime[j], "<- prob_spatial[(n*(",j-1,")+1):(n*",j,")]")))
+}
+
 Rates.prob.spat<- list()
 for(j in 1:length(crime)){
   Rates.prob.spat[[j]]<- tm_shape(carto_use) +
-    tm_polygons(col=paste("prob_spatial_",crime[j],sep=""), palette=paleta.p, title="", legend.show=T, legend.reverse=T, style="fixed", breaks=values.p, interval.closure="left",
+    tm_polygons(col=paste("prob_spatial_",crime[j],sep=""), palette=paleta.p,
+                title="", legend.show=T, legend.reverse=T, style="fixed", 
+                breaks=values.p, interval.closure="left",
                 labels=c("[0-0.1)","[0.1-0.2)","[0.2-0.8)","[0.8-0.9)","[0.9-1]")) +
     tm_layout(main.title=crime_name[j], main.title.position="center", legend.text.size=1) 
 }
@@ -301,27 +373,33 @@ print(Rates.prob.spat[[2]], vp=viewport(layout.pos.row = 2, layout.pos.col = 2))
 dev.off()
 
 ## rm
-rm(list=c("carto_use","spatial","paleta","top","inf","values","Rates.spat","prob_spatial","paleta.p","values.p","Rates.prob.spat","j"))
+rm(list=c("carto_use","spatial","paleta","top","inf","values","Rates.spat",
+          "prob_spatial","paleta.p","values.p","Rates.prob.spat","j"))
 
 ####################################
 ##  Figure 5. Temporal pattern of incidence risks (posterior means of exp(gamma_tj))
 ##            for rape and dowry deaths in Uttar Pradesh
 ####################################
-temp<- matrix(unlist(lapply(resulta$marginals.random$idy, function(x) inla.emarginal(exp,x))), ncol=length(crime), byrow = FALSE)
+temp <- matrix(unlist(lapply(resulta$marginals.random$idy,
+                             function(x) inla.emarginal(exp,x))), ncol=length(crime), byrow = FALSE)
 aux <- lapply(resulta$marginals.random$idy, function(x) inla.tmarginal(exp,x))
-q1 <- matrix(unlist(lapply(aux, function(x) inla.qmarginal(0.025,x))), ncol=length(crime), byrow = FALSE)
-q2 <- matrix(unlist(lapply(aux, function(x) inla.qmarginal(0.975,x))), ncol=length(crime), byrow = FALSE)
+q1 <- matrix(unlist(lapply(aux, function(x) inla.qmarginal(0.025,x))), 
+             ncol=length(crime), byrow = FALSE)
+q2 <- matrix(unlist(lapply(aux, function(x) inla.qmarginal(0.975,x))), 
+             ncol=length(crime), byrow = FALSE)
 
 ## minimum and maximum values
-inf<-min(q1)-0.05
-top<-max(q2)+0.05
+inf <-min(q1)-0.05
+top <-max(q2)+0.05
 
 ## color
-selected_colors<-c(rgb(154,192,205,alpha=150, maxColorValue=255), rgb(69,139,116,alpha=150, maxColorValue=255))
+selected_colors <- c(rgb(154,192,205,alpha=150, maxColorValue=255),
+                     rgb(69,139,116,alpha=150, maxColorValue=255))
 
 ## pdf figure 5
 pdf("figure_5.pdf", height=5, width=7.5, onefile=FALSE)
-plot(range(x), c(inf, top), type="n", xlab="Year", ylab="", xaxt="n", cex.lab=1, cex.axis=1, cex.main=1, main=NULL)
+plot(range(x), c(inf, top), type="n", xlab="Year", ylab="",
+     xaxt="n", cex.lab=1, cex.axis=1, cex.main=1, main=NULL)
 title(ylab=expression(exp(gamma[t])), line=2.5, cex.lab=1.1)
 axis(1, at=seq(1,t), labels=seq(t.from,t.to), las=0, cex.axis=1)
 for(i in 1:length(crime)){
@@ -333,11 +411,13 @@ for(i in 1:length(crime)){
   ## rm
   rm(list = c("X.Vec", "Y.Vec"))
 }
-legend("topleft", inset=.02, crime_name, fill=selected_colors, horiz=FALSE, cex=1,box.lty=0)
+legend("topleft", inset=.02, crime_name, fill=selected_colors,
+       horiz=FALSE, cex=1,box.lty=0)
 dev.off()
 
 # rm
 rm(list=c("temp", "aux", "q1", "q2","inf", "top", "selected_colors","i"))
+
 ####################################
 ##  Figure 6. Map of estimated incidence risks for rape (top) and posterior probabilities
 ##            that the relative risk is greater than 1 (P(Ritj>1|O)) (bottom) in Uttar 
@@ -352,27 +432,35 @@ carto_use<- carto_up
 d.data_frame$risks<- resulta$summary.fitted.values$mean
 risks<- list()
 for(i in 1:length(crime)){
-  risks[[i]]<- data.frame(matrix(d.data_frame[d.data_frame$ID_disease==i,c("risks")], nrow=n, ncol=t, byrow=FALSE))
+  risks[[i]]<- data.frame(matrix(d.data_frame[d.data_frame$ID_disease==i,c("risks")], 
+                                 nrow=n, ncol=t, byrow=FALSE))
   colnames(risks[[i]])<- paste0("risk_", crime[i],"_",t.from:t.to)
   for(l in t.from:t.to){
-    eval(parse(text=  paste0("carto_use$risks_",crime[i], "_", l,"<- risks[[",i,"]]$risk_",crime[i],"_", l) ))
+    eval(parse(text=  paste0("carto_use$risks_",crime[i], "_",
+                             l,"<- risks[[",i,"]]$risk_",crime[i],"_", l) ))
   }
 }
+
 paleta <- brewer.pal(8,"YlOrRd")
 minimo<- min(d.data_frame$risks)
 maximo<- max(d.data_frame$risks)
-values<- c(round(seq(minimo, 1, length.out = 5),2), round(seq(1, maximo, length.out = 5),2)[-1] )
+values<- c(round(seq(minimo, 1, length.out = 5),2),
+           round(seq(1, maximo, length.out = 5),2)[-1] )
 d.data_frame<- d.data_frame[-which(names(d.data_frame)%in% c("risks"))]
+
 
 Rates.Risks<- list()
 for(j in 1:length(crime)){
   Rates.Risks[[j]]<- tm_shape(carto_use) + 
-    tm_polygons(col=paste("risks_",crime[j],"_",seq(t.from,t.to), sep=""), palette=paleta, title="", legend.show=T, legend.reverse=T, style="fixed", breaks=values, interval.closure="left") +
-    tm_layout(main.title=crime_name[j] , main.title.position="center", legend.text.size=1,
+    tm_polygons(col=paste("risks_",crime[j],"_",seq(t.from,t.to), sep=""),
+                palette=paleta, title="", legend.show=T, legend.reverse=T,
+                style="fixed", breaks=values, interval.closure="left") +
+    tm_layout(main.title=crime_name[j] , main.title.position="center",
+              legend.text.size=1,
               panel.labels=as.character(round(seq(t.from,t.to,length.out=t))),
               panel.show=T, panel.label.size=2, panel.label.bg.color="lightskyblue",
-              legend.outside=T, legend.outside.position="right", legend.frame=F, legend.outside.size=0.25,
-              outer.margins=c(0.02,0.01,0.02,0.01)) +
+              legend.outside=T, legend.outside.position="right", legend.frame=F,
+              legend.outside.size=0.25, outer.margins=c(0.02,0.01,0.02,0.01)) +
     tm_facets(ncol=5, nrow=3) 
 }
 
@@ -380,12 +468,15 @@ for(j in 1:length(crime)){
 d.data_frame$prp<- 1-resulta$summary.linear.predictor[,"0 cdf"]
 p.risks<- list()
 for(i in 1:length(crime)){
-  p.risks[[i]]<- data.frame(matrix(d.data_frame[d.data_frame$ID_disease==i,c("prp")], nrow=n, ncol=t, byrow=FALSE))
+  p.risks[[i]]<- data.frame(matrix(d.data_frame[d.data_frame$ID_disease==i,c("prp")], 
+                                   nrow=n, ncol=t, byrow=FALSE))
   colnames(p.risks[[i]])<- paste0("p.risk_", crime[i],"_",t.from:t.to)
   for(l in t.from:t.to){
-    eval(parse(text=  paste0("carto_use$p.risks_",crime[i], "_", l,"<- p.risks[[",i,"]]$p.risk_",crime[i],"_", l) ))
+    eval(parse(text=  paste0("carto_use$p.risks_",crime[i], "_", 
+                             l,"<- p.risks[[",i,"]]$p.risk_",crime[i],"_", l) ))
   }
 }
+
 paleta.p <- brewer.pal(5,"PuBu")
 values.p <- c(0,0.1,0.2,0.8,0.9,1)
 d.data_frame<- d.data_frame[-which(names(d.data_frame)%in% c("prp"))]
@@ -393,12 +484,15 @@ d.data_frame<- d.data_frame[-which(names(d.data_frame)%in% c("prp"))]
 Prob.Risks<- list()
 for(j in 1:length(crime)){
   Prob.Risks[[j]]<- tm_shape(carto_use) + 
-    tm_polygons(col=paste("p.risks_",crime[j],"_",seq(t.from,t.to), sep=""), palette=paleta.p, title="", legend.show=T, legend.reverse=T, style="fixed", breaks=values.p, interval.closure="left") +
-    tm_layout(main.title=crime_name[j], main.title.position="center", legend.text.size=1,
+    tm_polygons(col=paste("p.risks_",crime[j],"_",seq(t.from,t.to), sep=""), 
+                palette=paleta.p, title="", legend.show=T, legend.reverse=T, 
+                style="fixed", breaks=values.p, interval.closure="left") +
+    tm_layout(main.title=crime_name[j], main.title.position="center", 
+              legend.text.size=1,
               panel.labels=as.character(round(seq(t.from,t.to,length.out=t))),
               panel.show=T, panel.label.size=2, panel.label.bg.color="lightskyblue",
-              legend.outside=T, legend.outside.position="right", legend.frame=F, legend.outside.size=0.25,
-              outer.margins=c(0.02,0.01,0.02,0.01)) +
+              legend.outside=T, legend.outside.position="right", legend.frame=F, 
+              legend.outside.size=0.25, outer.margins=c(0.02,0.01,0.02,0.01)) +
     tm_facets(ncol=5, nrow=3) 
 }
 
@@ -417,7 +511,9 @@ print(Prob.Risks[[2]], vp=viewport(layout.pos.row = 2, layout.pos.col = 1))
 dev.off()
 
 ## rm
-rm(list = c("carto_use", "risks", "paleta", "minimo", "maximo", "values", "Rates.Risks", "p.risks", "paleta.p", "values.p", "Prob.Risks", "i","l","j"))
+rm(list = c("carto_use", "risks", "paleta", "minimo", "maximo", "values", 
+            "Rates.Risks", "p.risks", "paleta.p", "values.p", "Prob.Risks", 
+            "i","l","j"))
 
 ####################################
 ##  Figure 8. Temporal evolution of final risk estimates for rape and dowry deaths
@@ -428,22 +524,25 @@ rm(list = c("carto_use", "risks", "paleta", "minimo", "maximo", "values", "Rates
 id.area<- c(2,28,43,49,61,70)
 
 
-d.data_frame$risks.mean<- resulta$summary.fitted.values[,c("mean")]
-d.data_frame$risks.q025<- resulta$summary.fitted.values[,c("0.025quant")]
-d.data_frame$risks.q975<- resulta$summary.fitted.values[,c("0.975quant")]
+d.data_frame$risks.mean <- resulta$summary.fitted.values[,c("mean")]
+d.data_frame$risks.q025 <- resulta$summary.fitted.values[,c("0.025quant")]
+d.data_frame$risks.q975 <- resulta$summary.fitted.values[,c("0.975quant")]
 
 ## minimum and maximum values
-inf<- round(min(d.data_frame[d.data_frame$ID_area%in%id.area, c("risks.q025")]),2)-0.05
-top<- round(max(d.data_frame[d.data_frame$ID_area%in%id.area, c("risks.q975")]),2)+1.5
+inf <- round(min(d.data_frame[d.data_frame$ID_area%in%id.area, c("risks.q025")]),2)-0.05
+top <- round(max(d.data_frame[d.data_frame$ID_area%in%id.area, c("risks.q975")]),2)+1.5
 
 ## color
-selected_colors<-c(rgb(154,192,205,alpha=150, maxColorValue=255), rgb(69,139,116,alpha=150, maxColorValue=255))
+selected_colors<-c(rgb(154,192,205,alpha=150, maxColorValue=255),
+                   rgb(69,139,116,alpha=150, maxColorValue=255))
 
 ## pdf figure 8
 pdf("figure_8.pdf", height=12, width=12, onefile=FALSE)
 par(mfrow=c(3,2))
+
 for (i in id.area){
-  plot(range(x),c(inf, top), type="n",xlab="Year", ylab="", xaxt="n", cex.main=2.5, cex.lab=1.5, cex.axis=1.5, 
+  plot(range(x),c(inf, top), type="n",xlab="Year", ylab="", xaxt="n", 
+       cex.main=2.5, cex.lab=1.5, cex.axis=1.5, 
        main=paste0(unique(data[data$ID_area==i, c("dist")])," (ID area ", i,")")) 
   title(ylab=expression(R[ijt]), line=2.0, cex.lab=1.7)
   axis(1, at=seq(1,t), labels=seq(t.from,t.to), las=0, cex.axis=1.5)
@@ -462,7 +561,7 @@ for (i in id.area){
 }
 dev.off()
 
-##rm
+## rm
 d.data_frame<- d.data_frame[-which(names(d.data_frame)%in% c("risks.mean", "risks.q025", "risks.q975"))]
 rm(list=c("id.area", "inf", "top", "selected_colors", "i", "j"))
 
@@ -475,20 +574,27 @@ rm(list=c("id.area", "inf", "top", "selected_colors", "i", "j"))
 ##            variation of the number of rapes and dowry deaths in the districts 
 ##            of Uttar Pradesh per year
 ####################################
+
 table.1<- matrix(NA, nrow=t, ncol=15)
-colnames(table.1)<- c("Year", "min", "q1", "mean", "q3", "max", "sd", "|cv|", "min", "q1", "mean", "q3", "max", "sd", "|cv|")
+colnames(table.1)<- c("Year", "min", "q1", "mean", "q3", "max", "sd", "|cv|",
+                      "min", "q1", "mean", "q3", "max", "sd", "|cv|")
 for(i in 1:t){
-  table.1[i,]<- c(2000+i, summary(data[data$ID_year==i, crime[1]])[-3], sd(data[data$ID_year==i, crime[1]]), NA,
-                  summary(data[data$ID_year==i, crime[2]])[-3], sd(data[data$ID_year==i, crime[2]]), NA)
+  table.1[i,]<- c(2000+i, summary(data[data$ID_year==i, crime[1]])[-3],
+                  sd(data[data$ID_year==i, crime[1]]), NA,
+                  summary(data[data$ID_year==i, crime[2]])[-3],
+                  sd(data[data$ID_year==i, crime[2]]), NA)
   table.1[i,8]<- abs(table.1[i,7]/ table.1[i,4])
   table.1[i,15]<- abs(table.1[i,14]/ table.1[i,11])
 }
 table.1<- round(table.1, 1)
 
 ## latex
-latex_table<-xtable::xtable(table.1, caption="Descriptive statistics. Minimun, first quartile ($q_1$), mean, third quartile ($q_3$), maximun, standard desviation (sd), and coefficient of variation of the number of rapes and dowry deaths in the districts of Uttar Pradesh per year.", label="t_crime", digits=c(1),
+latex_table<-xtable::xtable(table.1,
+                            caption="Descriptive statistics. Minimun, first quartile ($q_1$), mean, third quartile ($q_3$), maximun, standard desviation (sd), and coefficient of variation of the number of rapes and dowry deaths in the districts of Uttar Pradesh per year.",
+                            label="t_crime", digits=c(1),
                             display=c("d", "d", "d","f","f","f","d","f","f", "d","f","f","f","d","f","f"))
-xtable::print.xtable(latex_table, include.rownames = FALSE, comment=FALSE, caption.placement = getOption("xtable.caption.placement", "top"))
+xtable::print.xtable(latex_table, include.rownames = FALSE, comment=FALSE, 
+                     caption.placement = getOption("xtable.caption.placement", "top"))
 
 ## rm
 rm(list = c("table.1", "i", "latex_table"))
@@ -502,15 +608,22 @@ for(i in 1:t){ cor.spat<- c(cor.spat, cor(data[data$ID_year==i,c("smr_rape","smr
 cor.temp<- c()
 for(i in 1:n){ cor.temp<- c(cor.temp, cor(data[data$ID_area==i,c("smr_rape","smr_dowry")])[1,2]) }
 
-table.2<- rbind(c(summary(cor.spat), sd(cor.spat), abs(sd(cor.spat)/mean(cor.spat))), c(summary(cor.temp), sd(cor.temp), abs(sd(cor.temp)/mean(cor.temp))))
+
+table.2<- rbind(c(summary(cor.spat), sd(cor.spat), abs(sd(cor.spat)/mean(cor.spat))), 
+                c(summary(cor.temp), sd(cor.temp), abs(sd(cor.temp)/mean(cor.temp))))
 colnames(table.2)<- c("min", "q1", "median", "mean", "q3", "max", "sd", "|cv|")
 table.2<- as.data.frame(table.2)
 table.2$Correlation <- c("spatial patterns", "temporal trends")
-table.2<- table.2[,c("Correlation", "min", "q1", "median", "mean", "q3", "max", "sd", "|cv|")]
+table.2<- table.2[,c("Correlation", "min", "q1", "median", "mean", "q3", "max", 
+                     "sd", "|cv|")]
+
 
 ## latex
-latex_table<-xtable::xtable(table.2, caption="Correlations between spatial (by year) and temporal patterns (by district) of rape and dowry deaths.", label="t_corre", digits=c(3))
-xtable::print.xtable(latex_table, include.rownames = FALSE, comment=FALSE, caption.placement = getOption("xtable.caption.placement", "top"))
+latex_table<-xtable::xtable(table.2,
+                            caption="Correlations between spatial (by year) and temporal patterns (by district) of rape and dowry deaths.",
+                            label="t_corre", digits=c(3))
+xtable::print.xtable(latex_table, include.rownames = FALSE, comment=FALSE, 
+                     caption.placement = getOption("xtable.caption.placement", "top"))
 
 ## rm
 rm(list = c("cor.spat", "cor.temp", "table.2", "i", "latex_table"))
@@ -535,8 +648,11 @@ table.3<-cbind(spat, spatemp, temp, table.3)
 
 
 ## latex
-x_table<-xtable::xtable(table.3, caption="Model selection criteria, DIC, WAIC and LS, for different models.", label="t_dic", digits=c(3))
-xtable::print.xtable(x_table, include.rownames = FALSE, comment=FALSE, caption.placement = getOption("xtable.caption.placement", "top"))
+x_table<-xtable::xtable(table.3, 
+                        caption="Model selection criteria, DIC, WAIC and LS, for different models.", 
+                        label="t_dic", digits=c(3))
+xtable::print.xtable(x_table, include.rownames = FALSE, comment=FALSE, 
+                     caption.placement = getOption("xtable.caption.placement", "top"))
 
 ## rm
 rm(list=c("table.3", "random.effect","spatemp", "spat", "temp", "i", "aux", "x_table"))
@@ -548,13 +664,17 @@ rm(list=c("table.3", "random.effect","spatemp", "spat", "temp", "i", "aux", "x_t
 ##  Table A.1.  District identifiers (ID) of Uttar Pradesh
 ####################################
 ID<- data.frame(dist=carto_up$dist, ID_area=carto_up$ID_area)
-table.a1<- cbind(ID[1:24,c("ID_area", "dist")], ID[25:48,c("ID_area", "dist")], ID[49:72,c("ID_area", "dist")])
+table.a1<- cbind(ID[1:24,c("ID_area", "dist")], ID[25:48,c("ID_area", "dist")],
+                 ID[49:72,c("ID_area", "dist")])
 colnames(table.a1)<- c("ID", "Dist","ID", "Dist", "ID", "Dist")
 
 
 ## latex
-x_table<-xtable::xtable(table.a1, caption="District identifiers (ID) of Uttar Pradesh.", label="table_a1", digits=c(3))
-xtable::print.xtable(x_table, include.rownames = FALSE, comment=FALSE, caption.placement = getOption("xtable.caption.placement", "top"))
+x_table<-xtable::xtable(table.a1, 
+                        caption="District identifiers (ID) of Uttar Pradesh.",
+                        label="table_a1", digits=c(3))
+xtable::print.xtable(x_table, include.rownames = FALSE, comment=FALSE, 
+                     caption.placement = getOption("xtable.caption.placement", "top"))
 
 ## rm
 rm(list = c("ID", "table.a1", "x_table"))
@@ -588,18 +708,22 @@ for(i in 1:length(spatial)){
   rm(list = c("aux", "aux1", "aux2", "aux.r", "aux1.r", "aux2.r"))
 }
 table.a2<- as.data.frame(cbind(table.l, table.r))
-colnames(table.a2)<- c("mean.fe", "sd.fe", "q.025.fe", "q.975.fe", "mean.re", "sd.re", "q.025.re", "q.975.re")
+colnames(table.a2)<- c("mean.fe", "sd.fe", "q.025.fe", "q.975.fe", "mean.re", 
+                       "sd.re", "q.025.re", "q.975.re")
 rownames(table.a2)<- NULL
 table.a2$spatial<- rep(c("iCAR", "pCAR", "LCAR", "BYM"), each=length(spatial))
 table.a2$crime<- rep(rep(crime_name, each=2), times= length(spatial))
 table.a2$met<- rep(c("MCMC", "INLA"), times= length(spatial)*k)
-table.a2<- table.a2[,c("spatial", "crime", "met", "mean.fe", "sd.fe", "q.025.fe", "q.975.fe", "mean.re", "sd.re", "q.025.re", "q.975.re" )]
-
+table.a2<- table.a2[,c("spatial", "crime", "met", "mean.fe", "sd.fe", "q.025.fe",
+                       "q.975.fe", "mean.re", "sd.re", "q.025.re", "q.975.re" )]
 
 
 ## latex
-latex_table<-xtable::xtable(table.a2, caption="Posterior means, standard deviations, and 95% credible intervals for the crime-specific intercepts (alpha_{j}, j=1,2) of the models with a spatio-temporal Type II interaction term.", label="t_mu", digits=3)
-xtable::print.xtable(latex_table, include.rownames = FALSE, comment=FALSE, caption.placement = getOption("xtable.caption.placement", "top"))
+latex_table<-xtable::xtable(table.a2,
+                            caption="Posterior means, standard deviations, and 95% credible intervals for the crime-specific intercepts (alpha_{j}, j=1,2) of the models with a spatio-temporal Type II interaction term.",
+                            label="t_mu", digits=3)
+xtable::print.xtable(latex_table, include.rownames = FALSE, comment=FALSE, 
+                     caption.placement = getOption("xtable.caption.placement", "top"))
 
 # rm
 rm(list = c("table.a2", "spatial", "table.l", "table.r", "latex_table", "i", "j"))
@@ -642,7 +766,8 @@ rownames(hyper)<- NULL
 hyper<- hyper[,c("model_names", "Mmodel", "metod", "param", "mean", "q.025", "q.975")]
 
 hyperparam<- rbind(hyperparam, hyper)
-rm(list = c("model.inla", "hyper.i", "marg", "model.winbugs", "names_summ", "sd_st", "hyper.w", "hyper", "m.e"))
+rm(list = c("model.inla", "hyper.i", "marg", "model.winbugs", "names_summ", 
+            "sd_st", "hyper.w", "hyper", "m.e"))
 
 m.e<- c("RE")
 model.inla<- resulta.inla$icar.t2.re
@@ -679,7 +804,9 @@ hyper<- hyper[,c("model_names", "Mmodel", "metod", "param", "mean", "q.025", "q.
 
 hyperparam<- rbind(hyperparam, hyper)
 
-rm(list = c("model.inla", "hyper.i", "marg", "model.winbugs", "names_summ", "sd_spat","sd_temp","sd_st", "hyper.w", "hyper", "m.e"))
+rm(list = c("model.inla", "hyper.i", "marg", "model.winbugs", "names_summ", 
+            "sd_spat","sd_temp","sd_st", "hyper.w", "hyper", "m.e"))
+
 ##############
 ## pcar
 ##############
@@ -721,7 +848,8 @@ hyper<- hyper[,c("model_names", "Mmodel", "metod", "param", "mean", "q.025", "q.
 
 hyperparam<- rbind(hyperparam, hyper)
 
-rm(list = c("model.inla", "hyper.i", "marg", "model.winbugs", "names_summ", "sd_st", "gamma", "hyper.w", "hyper", "m.e"))
+rm(list = c("model.inla", "hyper.i", "marg", "model.winbugs", "names_summ",
+            "sd_st", "gamma", "hyper.w", "hyper", "m.e"))
 
 ## RE
 m.e<- c("RE")
@@ -766,7 +894,8 @@ hyper<- hyper[,c("model_names", "Mmodel", "metod", "param", "mean", "q.025", "q.
 hyperparam<- rbind(hyperparam, hyper)
 
 ##
-rm(list = c("model.inla", "hyper.i", "marg", "model.winbugs", "names_summ", "sd_spat","sd_temp","sd_st","gamma","hyper.w", "hyper", "m.e"))
+rm(list = c("model.inla", "hyper.i", "marg", "model.winbugs", "names_summ", 
+            "sd_spat","sd_temp","sd_st","gamma","hyper.w", "hyper", "m.e"))
 rm(m)
 ##############
 ## lcar
@@ -807,7 +936,8 @@ hyper<- hyper[,c("model_names", "Mmodel", "metod", "param", "mean", "q.025", "q.
 
 hyperparam<- rbind(hyperparam, hyper)
 
-rm(list = c("model.inla", "hyper.i", "marg", "model.winbugs", "names_summ", "sd_st", "gamma", "hyper.w", "hyper", "m.e"))
+rm(list = c("model.inla", "hyper.i", "marg", "model.winbugs", "names_summ",
+            "sd_st", "gamma", "hyper.w", "hyper", "m.e"))
 
 ## RE
 m.e<- c("RE")
@@ -852,7 +982,8 @@ hyper<- hyper[,c("model_names", "Mmodel", "metod", "param", "mean", "q.025", "q.
 
 hyperparam<- rbind(hyperparam, hyper)
 
-rm(list = c("model.inla", "hyper.i", "marg", "model.winbugs", "names_summ", "sd_spat","sd_temp","sd_st","gamma","hyper.w", "hyper", "m.e"))
+rm(list = c("model.inla", "hyper.i", "marg", "model.winbugs", "names_summ",
+            "sd_spat","sd_temp","sd_st","gamma","hyper.w", "hyper", "m.e"))
 rm(m)
 ##############
 ## bym
@@ -888,7 +1019,8 @@ hyper<- hyper[,c("model_names", "Mmodel", "metod", "param", "mean", "q.025", "q.
 
 hyperparam<- rbind(hyperparam, hyper)
 
-rm(list = c("model.inla", "hyper.i", "marg", "model.winbugs", "names_summ", "sd_st", "hyper.w", "hyper", "m.e"))
+rm(list = c("model.inla", "hyper.i", "marg", "model.winbugs", "names_summ",
+            "sd_st", "hyper.w", "hyper", "m.e"))
 
 ## RE
 m.e<- c("RE")
@@ -930,7 +1062,8 @@ hyper<- hyper[,c("model_names", "Mmodel", "metod", "param", "mean", "q.025", "q.
 hyperparam<- rbind(hyperparam, hyper)
 
 ##
-rm(list = c("model.inla", "hyper.i", "marg", "model.winbugs", "names_summ", "sd_spat","sd_temp","sd_st","hyper.w", "hyper", "m.e"))
+rm(list = c("model.inla", "hyper.i", "marg", "model.winbugs", "names_summ", 
+            "sd_spat","sd_temp","sd_st","hyper.w", "hyper", "m.e"))
 rm(m)
 
 ##############
@@ -939,8 +1072,11 @@ rm(m)
 table.a3<- cbind(hyperparam[hyperparam$metod=="INLA",c("model_names", "Mmodel", "param", "mean", "q.025", "q.975")], 
                 hyperparam[hyperparam$metod=="MCMC",c("mean", "q.025", "q.975")])
 ## latex
-latex_table<-xtable::xtable(table.a3, caption="Posterior means, standard deviations, and 95% credible intervals for the hyperparameters of the models with a spatio-temporal Type II interaction term.", label="t_hyper", digits=c(3))
-xtable::print.xtable(latex_table, include.rownames = FALSE, comment=FALSE, caption.placement = getOption("xtable.caption.placement", "top"))
+latex_table<-xtable::xtable(table.a3, 
+                            caption="Posterior means, standard deviations, and 95% credible intervals for the hyperparameters of the models with a spatio-temporal Type II interaction term.",
+                            label="t_hyper", digits=c(3))
+xtable::print.xtable(latex_table, include.rownames = FALSE, comment=FALSE,
+                     caption.placement = getOption("xtable.caption.placement", "top"))
 
 ## rm
 rm(list = c("table.a3", "latex_table", "hyperparam"))

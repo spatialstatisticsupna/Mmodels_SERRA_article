@@ -2,7 +2,7 @@
 
 This folder contains the necessary R functions to fit the multivariate spatio-temporal models described in Vicente et al. (2020), and to reproduce the results.
 
-The [dataMmodel.RData](https://github.com/spatialstatisticsupna/Mmodels_SERRA_article/blob/master/R/dataMmodel.RData) file contains the following R objects:
+The ```dataMmodel.RData``` file contains the following R objects:
 
 - ```data```: contains the data set used. It is a dataframe with the following variables,
 	- **dist**: Districts
