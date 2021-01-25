@@ -29,7 +29,7 @@ The ```dataMmodel.RData``` file contains the following R objects:
 
 The file [reproduce_paper_Mmodels.R](https://github.com/spatialstatisticsupna/Mmodels_SERRA_article/blob/master/R/reproduce_paper_Mmodels.R) permit to reproduce the results given in the paper.
 
-The [functions](https://github.com/spatialstatisticsupna/Mmodels_SERRA_article/blob/master/R/functions) folder contains the necessary functions to fit M-models using INLA and WinBUGS.
+The [functions](https://github.com/spatialstatisticsupna/Mmodels_SERRA_article/blob/master/R/functions) folder contains the functions to fit M-models using INLA and WinBUGS.
 
 The [run_Mmodels_inla.R](https://github.com/spatialstatisticsupna/Mmodels_SERRA_article/blob/master/R/run_Mmodels_inla.R) files allow you to adjust the fixed/random-effect M-models using INLA.
 
