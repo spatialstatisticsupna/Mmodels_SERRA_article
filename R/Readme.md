@@ -27,7 +27,7 @@ The ```dataMmodel.RData``` file contains the following R objects:
 - ```Mzz```: is the upper triangular matrix of the Cholesky decomposition of the inverse of the temporal neighborhood matrix
 
 
-The file [reproduce_paper_Mmodels.R](https://github.com/spatialstatisticsupna/Mmodels_SERRA_article/blob/master/R/reproduce_paper_Mmodels.R) permit to reproduce the results given in the paper.
+The file [reproduce_paper_Mmodels.R](https://github.com/spatialstatisticsupna/Mmodels_SERRA_article/blob/master/R/reproduce_paper_Mmodels.R) permits to reproduce the results given in the paper.
 
 The [functions](https://github.com/spatialstatisticsupna/Mmodels_SERRA_article/blob/master/R/functions) folder contains the functions to fit M-models using INLA and WinBUGS.
 
