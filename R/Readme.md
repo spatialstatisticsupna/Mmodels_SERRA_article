@@ -1,6 +1,6 @@
 # R code
 
-This folder contains the necessary R functions to fit the multivariate spatio-temporal models described in Vicente et al. (2020), and to reproduce the results.
+This folder contains the necessary R functions to fit the multivariate spatio-temporal models described in Vicente et al. (2020) and reproduce results.
 
 The ```dataMmodel.RData``` file contains the following R objects:
 
