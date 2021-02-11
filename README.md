@@ -1,5 +1,5 @@
 # Bayesian inference in multivariate spatio-temporal areal models using INLA: analysis of gender-based violence in small areas
-This repository contains the R code to fit the models described in the paper entitled _"Bayesian inference in multivariate spatio-temporal areal models using INLA: analysis of gender-based violence in small areas"_ (Vicente et al., 2020).
+This repository contains the R code to fit the models described in the paper entitled _"Bayesian inference in multivariate spatio-temporal areal models using INLA: analysis of gender-based violence in small areas"_ (Vicente et al., 2020). If using a version of R > 4.0.0 we advise to use the TESTING version of INLA.
 
 ## Table of contents
 - [R code](#R-code)
