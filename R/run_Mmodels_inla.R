@@ -118,27 +118,27 @@ save(resulta.inla.icar.fe, file=paste0("./resul/", gsub("\\.", "_", "resulta.inl
 ## 1.1.2) RE      ##
 ####################
 ## icar.ad.re
-icar.ad.re <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+icar.ad.re <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                            O="observed", E="expected", prior.spatial="intrinsic",
                            prior.disease="RE", prior.interaction=0, strategy=strategy)
 
 ## icar.t1.re
-icar.t1.re <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+icar.t1.re <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                            O="observed", E="expected", prior.spatial="intrinsic",
                            prior.disease="RE", prior.interaction=1, strategy=strategy)
 
 ## icar.t2.re
-icar.t2.re <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+icar.t2.re <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                            O="observed", E="expected", prior.spatial="intrinsic",
                            prior.disease="RE", prior.interaction=2, strategy=strategy)
 
 ## icar.t3.re
-icar.t3.re <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+icar.t3.re <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                            O="observed", E="expected", prior.spatial="intrinsic",
                            prior.disease="RE", prior.interaction=3, strategy=strategy)
 
 ## icar.t4.re
-icar.t4.re <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+icar.t4.re <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                            O="observed", E="expected", prior.spatial="intrinsic", 
                            prior.disease="RE", prior.interaction=4, strategy=strategy)
 
@@ -156,23 +156,23 @@ save(resulta.inla.icar.re, file=paste0("./resul/", gsub("\\.", "_", "resulta.inl
 ## 1.2.1) FE      ##
 ####################
 ## lcar.ad.fe
-lcar.ad.fe <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+lcar.ad.fe <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                            O="observed", E="expected", prior.spatial="Leroux",
                            prior.disease="FE", prior.interaction=0, strategy=strategy)
 ## lcar.t1.fe
-lcar.t1.fe <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+lcar.t1.fe <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                            O="observed", E="expected", prior.spatial="Leroux",
                            prior.disease="FE", prior.interaction=1, strategy=strategy)
 ## lcar.t2.fe
-lcar.t2.fe <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+lcar.t2.fe <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                            O="observed", E="expected", prior.spatial="Leroux",
                            prior.disease="FE", prior.interaction=2, strategy=strategy)
 ## lcar.t3.fe
-lcar.t3.fe <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+lcar.t3.fe <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                            O="observed", E="expected", prior.spatial="Leroux",
                            prior.disease="FE", prior.interaction=3, strategy=strategy)
 ## lcar.t4.fe
-lcar.t4.fe <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+lcar.t4.fe <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                            O="observed", E="expected", prior.spatial="Leroux",
                            prior.disease="FE", prior.interaction=4, strategy=strategy)
 
@@ -187,23 +187,23 @@ save(resulta.inla.lcar.fe, file=paste0("./resul/", gsub("\\.", "_", "resulta.inl
 ## 1.2.2) RE      ##
 ####################
 ## lcar.ad.re
-lcar.ad.re <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+lcar.ad.re <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                            O="observed", E="expected", prior.spatial="Leroux",
                            prior.disease="RE", prior.interaction=0,strategy=strategy)
 ## lcar.t1.re
-lcar.t1.re <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+lcar.t1.re <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                            O="observed", E="expected", prior.spatial="Leroux",
                            prior.disease="RE", prior.interaction=1, strategy=strategy)
 ## lcar.t2.re
-lcar.t2.re <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+lcar.t2.re <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                            O="observed", E="expected", prior.spatial="Leroux",
                            prior.disease="RE", prior.interaction=2, strategy=strategy)
 ## lcar.t3.re
-lcar.t3.re <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+lcar.t3.re <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                            O="observed", E="expected", prior.spatial="Leroux",
                            prior.disease="RE", prior.interaction=3, strategy=strategy)
 ## lcar.t4.re
-lcar.t4.re <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+lcar.t4.re <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                            O="observed", E="expected", prior.spatial="Leroux",
                            prior.disease="RE", prior.interaction=4, strategy=strategy)
 
@@ -221,23 +221,23 @@ save(resulta.inla.lcar.re, file=paste0("./resul/", gsub("\\.", "_", "resulta.inl
 ## 1.3.1) FE      ##
 ####################
 ## pcar.ad.fe
-pcar.ad.fe <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+pcar.ad.fe <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                            O="observed", E="expected", prior.spatial="proper",
                            prior.disease="FE", prior.interaction=0, strategy=strategy)
 ## pcar.t1.fe
-pcar.t1.fe <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+pcar.t1.fe <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                            O="observed", E="expected", prior.spatial="proper",
                            prior.disease="FE", prior.interaction=1, strategy=strategy)
 ## pcar.t2.fe
-pcar.t2.fe <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+pcar.t2.fe <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                            O="observed", E="expected", prior.spatial="proper",
                            prior.disease="FE", prior.interaction=2, strategy=strategy)
 ## pcar.t3.fe
-pcar.t3.fe <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+pcar.t3.fe <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                            O="observed", E="expected", prior.spatial="proper",
                            prior.disease="FE", prior.interaction=3, strategy=strategy)
 ## pcar.t4.fe
-pcar.t4.fe <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+pcar.t4.fe <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                            O="observed", E="expected", prior.spatial="proper",
                            prior.disease="FE", prior.interaction=4, strategy=strategy)
 
@@ -252,23 +252,23 @@ save(resulta.inla.pcar.fe, file=paste0("./resul/", gsub("\\.", "_", "resulta.inl
 ## 1.3.2) RE      ##
 ####################
 ## pcar.ad.re
-pcar.ad.re <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+pcar.ad.re <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                            O="observed", E="expected", prior.spatial="proper",
                            prior.disease="RE", prior.interaction=0, strategy=strategy)
 ## pcar.t1.re
-pcar.t1.re <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+pcar.t1.re <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                            O="observed", E="expected", prior.spatial="proper",
                            prior.disease="RE", prior.interaction=1, strategy=strategy)
 ## pcar.t2.re
-pcar.t2.re <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+pcar.t2.re <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                            O="observed", E="expected", prior.spatial="proper",
                            prior.disease="RE", prior.interaction=2, strategy=strategy)
 ## pcar.t3.re
-pcar.t3.re <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+pcar.t3.re <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                            O="observed", E="expected", prior.spatial="proper",
                            prior.disease="RE", prior.interaction=3, strategy=strategy)
 ## pcar.t4.re
-pcar.t4.re <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+pcar.t4.re <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                            O="observed", E="expected", prior.spatial="proper",
                            prior.disease="RE", prior.interaction=4, strategy=strategy)
 
@@ -287,23 +287,23 @@ save(resulta.inla.pcar.re, file=paste0("./resul/", gsub("\\.", "_", "resulta.inl
 ## 1.4.1) FE      ##
 ####################
 ## bym.ad.fe
-bym.ad.fe <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+bym.ad.fe <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                           O="observed", E="expected", prior.spatial="BYM",
                           prior.disease="FE", prior.interaction=0, strategy=strategy)
 ## bym.t1.fe
-bym.t1.fe <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+bym.t1.fe <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                           O="observed", E="expected", prior.spatial="BYM",
                           prior.disease="FE", prior.interaction=1, strategy=strategy)
 ## bym.t2.fe
-bym.t2.fe <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+bym.t2.fe <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                           O="observed", E="expected", prior.spatial="BYM",
                           prior.disease="FE", prior.interaction=2, strategy=strategy)
 ## bym.t3.fe
-bym.t3.fe <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+bym.t3.fe <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                           O="observed", E="expected", prior.spatial="BYM",
                           prior.disease="FE", prior.interaction=3, strategy=strategy)
 ## bym.t4.fe
-bym.t4.fe <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+bym.t4.fe <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                           O="observed", E="expected", prior.spatial="BYM",
                           prior.disease="FE", prior.interaction=4, strategy=strategy)
 ## save
@@ -317,23 +317,23 @@ save(resulta.inla.bym.fe, file=paste0("./resul/", gsub("\\.", "_", "resulta.inla
 ## 1.4.2) RE      ##
 ####################
 ## bym.ad.re
-bym.ad.re <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+bym.ad.re <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                           O="observed", E="expected", prior.spatial="BYM",
                           prior.disease="RE", prior.interaction=0, strategy=strategy)
 ## bym.t1.re
-bym.t1.re <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+bym.t1.re <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                           O="observed", E="expected", prior.spatial="BYM",
                           prior.disease="RE", prior.interaction=1, strategy=strategy)
 ## bym.t2.re
-bym.t2.re <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+bym.t2.re <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                           O="observed", E="expected", prior.spatial="BYM",
                           prior.disease="RE", prior.interaction=2, strategy=strategy)
 ## bym.t3.re
-bym.t3.re <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+bym.t3.re <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                           O="observed", E="expected", prior.spatial="BYM",
                           prior.disease="RE", prior.interaction=3, strategy=strategy)
 ## bym.t4.re
-bym.t4.re <- MCAR_INLA_st(carto=Carto_UP, data=Data_UP, ID.area="district", ID.year="year",
+bym.t4.re <- MCAR_INLA_st(carto=carto_up, data=Data_UP, ID.area="dist", ID.year="year",
                           O="observed", E="expected", prior.spatial="BYM",
                           prior.disease="RE", prior.interaction=4, strategy=strategy)
 
