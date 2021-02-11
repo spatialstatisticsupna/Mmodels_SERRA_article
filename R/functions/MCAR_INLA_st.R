@@ -220,8 +220,14 @@ MCAR_INLA_st <- function(carto=NULL,
                 # Rho.t<- stats::cov2cor(Sigma.t)
                 
                 
-                initial.values.s <- as.vector(c(sqrt(diag(Sigma.s)), Rho.s[upper.tri(Rho.s, diag = FALSE)] ))
-                initial.values.t <- as.vector(c(sqrt(diag(Sigma.t)), Rho.t[upper.tri(Rho.t, diag = FALSE)]))
+                initial.values.s <- as.vector(
+                        c(-log(diag(Sigma.s)),
+                          log(1+Rho.s[lower.tri(Rho.s, diag = FALSE)])-log(1-Rho.s[lower.tri(Rho.s, diag = FALSE)])
+                          ))
+                initial.values.t <- as.vector(
+                        c(-log(diag(Sigma.t)),
+                          log(1+Rho.t[lower.tri(Rho.t, diag = FALSE)])-log(1-Rho.t[lower.tri(Rho.t, diag = FALSE)])
+                          ))
                 
                 
                 ## Define selected Mmodel               ##

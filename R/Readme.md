@@ -1,6 +1,6 @@
 # R code
 
-This folder contains the necessary R functions to fit the multivariate spatio-temporal models described in Vicente et al. (2020), and to reproduce the results.
+This folder contains the necessary R functions to fit the multivariate spatio-temporal models described in Vicente et al. (2020) and reproduce results.
 
 The ```dataMmodel.RData``` file contains the following R objects:
 
@@ -27,9 +27,9 @@ The ```dataMmodel.RData``` file contains the following R objects:
 - ```Mzz```: is the upper triangular matrix of the Cholesky decomposition of the inverse of the temporal neighborhood matrix
 
 
-The file [reproduce_paper_Mmodels.R](https://github.com/spatialstatisticsupna/Mmodels_SERRA_article/blob/master/R/reproduce_paper_Mmodels.R) permit to reproduce the results given in the paper.
+The file [reproduce_paper_Mmodels.R](https://github.com/spatialstatisticsupna/Mmodels_SERRA_article/blob/master/R/reproduce_paper_Mmodels.R) permits to reproduce the results given in the paper.
 
-The [functions](https://github.com/spatialstatisticsupna/Mmodels_SERRA_article/blob/master/R/functions) folder contains the necessary functions to fit M-models using INLA and WinBUGS.
+The [functions](https://github.com/spatialstatisticsupna/Mmodels_SERRA_article/blob/master/R/functions) folder contains the functions to fit M-models using INLA and WinBUGS.
 
 The [run_Mmodels_inla.R](https://github.com/spatialstatisticsupna/Mmodels_SERRA_article/blob/master/R/run_Mmodels_inla.R) files allow you to adjust the fixed/random-effect M-models using INLA.
 
