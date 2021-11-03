@@ -6,8 +6,8 @@ The ```dataMmodel.RData``` file contains the following R objects:
 
 - ```data```: contains the data set used. It is a dataframe with the following variables,
 	- **dist**: Districts
-	- **state**: Satte (Uttar Pradesh)
-	- **year**: Year (2001:2014)
+	- **state**: States (Uttar Pradesh)
+	- **year**: Years (2001:2014)
 	- **rape**: Observed number of rapes
 	- **dowry**: Observed number of dowry deaths
 	- **pop**: Female population between 15 and 49 years (linear interpolation)
