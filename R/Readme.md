@@ -1,6 +1,7 @@
 # R code
 
-This folder contains the necessary R functions to fit the multivariate spatio-temporal models described in Vicente et al. (2020) and reproduce results. We recommend to use the TESTING version of INLA.
+This folder contains the necessary R functions to fit the multivariate spatio-temporal models described in Vicente et al. (2020) and reproduce results. 
+Computations were run using R-4.0.4 and the R-INLA version 21.02.23.
 
 The ```dataMmodel.RData``` file contains the following R objects:
 
