@@ -4,10 +4,10 @@ This repository contains the R code to fit the models described in the paper ent
 ## Table of contents
 - [R code](#R-code)
 
-- [References](#References)
+- [References](#References)  
 
 # R code
-An updated version of the R code to fit most of the multivariate spatio-temporal models described in the paper (compatible with R-INLA 21.11.22 or newer versions) can be found [here](https://github.com/spatialstatisticsupna/Mmodels_SERRA_article/blob/master/R/). In addition, a new reparameterization of the covariance matrix of the M-models based on its Barlett decomposition is defined for models fitted with INLA. 
+An updated version of the R code to fit most of the multivariate spatio-temporal models described in the paper (compatible with R-INLA 21.11.22 or newer versions) can be found [here](https://github.com/spatialstatisticsupna/Mmodels_SERRA_article/blob/master/R/). In addition, the Barlett decomposition of the between-crime spatial and temporal covariance matrices is used for models fitted with INLA. 
 
 The original code to reproduce the results of the paper using R-4.0.4 and the R-INLA version 21.02.23 is also available at: [Version v1](https://github.com/spatialstatisticsupna/Mmodels_SERRA_article/releases/tag/v1).
 
