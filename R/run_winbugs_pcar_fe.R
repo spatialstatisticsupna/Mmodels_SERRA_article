@@ -11,13 +11,15 @@
 ################################################################################
 rm(list=ls())
 
-
 ## libraries
 library(spdep); library(INLA); library(abind)
-library(pbugs) # For running the models in parallel calls to WinBUGS
+
+# For running the models in parallel calls to WinBUGS
+# devtools::install_github("fisabio/pbugs")
+library(pbugs) 
 
 ## Folder to save results
-if(!file.exists("resul")) {dir.create("resul")}
+if(!file.exists("results")) {dir.create("results")}
 
 ## Load data and Uttar Pradesh SpatialPolygonsDataFrame
 load("./dataMmodel.RData")
@@ -25,62 +27,57 @@ load("./dataMmodel.RData")
 ################################################################################
 ## Data organization for WinBUGS                                              ##
 ################################################################################
-datos<- data
-carto<- carto_up
-
-## crimes
-crimes<- c("rape", "dowry")
-
-## Number of areas and number of time periods
-n<- length(unique(datos$ID_area))
-t<- length(unique(datos$ID_year))
-
-## array with observed cases
-Obs<- datos[,c(crimes,"ID_area","ID_year")]   
-aux<- Obs[,c(crimes, "ID_year")]
-O<- abind::abind(split(aux[,1:length(crimes)], aux[,dim(aux)[2]]),along = 3)
-rownames(O)<-NULL
-rm(list=c("aux", "Obs")) 
-
-## array with expected cases
-Esp<-datos[,c(paste0("e_",crimes),"ID_area","ID_year")]
-aux<- Esp[,c(paste0("e_",crimes), "ID_year")]
-E<- abind::abind(split(aux[,1:length(crimes)], aux[,dim(aux)[2]]),along = 3)
-rownames(E)<-NULL
-rm(list=c("aux", "Esp")) 
 
 ## Define number of: areas, crimes and time periods
-Nareas<-dim(O)[1]
-Ndiseases<-dim(O)[2]
-Nyears<-dim(O)[3]
+Ndiseases <- length(data_UP)
+Nareas <- length(unique(data_UP$dowry$dist))
+Nyears <- length(unique(data_UP$dowry$year))
 
-## Neighborhood structure (spatial)
-nb<-spdep::poly2nb(carto)
-## for lcar
-off<- c(0,sapply(nb,length))
-for(i in 2:length(off)){off[i]<- off[i]+off[i-1]}
+## Array with observed cases
+O <- array(NA, dim=c(Nareas,Ndiseases,Nyears),
+           dimnames=list(unique(data_UP$dowry$dist),names(data_UP),unique(data_UP$dowry$year)))
 
-## Neighborhood structure (temporal)
-nbt<-list()
-nbt[[1]]<-c(2)
-nbt[[Nyears]]<-c(Nyears-1)
+O[,"rape",] <- matrix(data_UP$rape$obs,Nareas,Nyears)
+O[,"dowry",] <- matrix(data_UP$dowry$obs,Nareas,Nyears)
+
+
+## Array with observed cases
+E <- array(NA, dim=c(Nareas,Ndiseases,Nyears),
+           dimnames=list(unique(data_UP$dowry$dist),names(data_UP),unique(data_UP$dowry$year)))
+
+E[,"rape",] <- matrix(data_UP$rape$exp,Nareas,Nyears)
+E[,"dowry",] <- matrix(data_UP$dowry$exp,Nareas,Nyears)
+
+
+## Spatial neighbourhood structure
+nb <- spdep::poly2nb(carto_UP)
+
+## for LCAR model
+off <- c(0,sapply(nb,length))
+for(i in 2:length(off)){
+  off[i]<- off[i]+off[i-1]
+}
+
+## Temporal neighbourhood structure
+nbt <- list()
+nbt[[1]] <- c(2)
+nbt[[Nyears]] <- c(Nyears-1)
 for(l in 2:(Nyears-1)){
   nbt[[l]]<-c(l-1,l+1)
 }
-rm(l) 
 
 ################################################################################
 ## load functions                                                             ##
 ################################################################################
-source("functions/fe_fe_pcar_spaciotemporal_functions.R") # functions (models)
+source("functions/WINBUGS_fe_fe_pcar_ST.R")
 
 ## bugs.directory
-bugs.dir<- c("") # Set an appropiate directory
+bugs.dir <- c("C:/WinBUGS14") # Set an appropriate directory
 
-## n.chains, n.iter, n.burnin
-num.chains<- 3
-num.iter<- 30000
-num.burnin<- 5000
+## Set 'n.chains', 'n.iter' and 'n.burnin' parameters
+num.chains <- 3
+num.iter <- 30000
+num.burnin <- 5000
 
 ################################################################################
 ## Run models                                                                 ##
@@ -90,10 +87,10 @@ num.burnin<- 5000
 ########################################
 ## Additive                           ##
 ########################################
-data<-list(Nyears=Nyears, Ndiseases=Ndiseases, Nareas=Nareas, O=O, E=E, 
-           adj=unlist(nb), num=sapply(nb,length), M.car.s= 1/sapply(nb,length), 
-           C.car.s= rep(1/sapply(nb,length), sapply(nb,length)), 
-           adjt=unlist(nbt), weightst=rep(1,length(unlist(nbt))), numt=sapply(nbt,length))
+data <- list(Nyears=Nyears, Ndiseases=Ndiseases, Nareas=Nareas, O=O, E=E, 
+             adj=unlist(nb), num=sapply(nb,length), M.car.s= 1/sapply(nb,length), 
+             C.car.s= rep(1/sapply(nb,length), sapply(nb,length)), 
+             adjt=unlist(nbt), weightst=rep(1,length(unlist(nbt))), numt=sapply(nbt,length))
 
 ## FE.FE.ad.pcar
 initials <- function(){list(mu=rnorm(Ndiseases,0,0.1),
@@ -106,14 +103,14 @@ param <- c("smr.prob", "espat.prob", "etemp.prob", "gamma","SMR", "lambda", "mu"
            "Theta", "M", "Sigma.s", "Corre.s", "Gam", "Mg", "Sigma.t", "Corre.t",
            "Espat", "Etemp")
 
-t.result <- system.time(result <- Pbugs(program="winbugs", data = data, inits = initials, 
+t.result <- system.time(result <- pbugs(program="winbugs", data = data, inits = initials, 
                                         parameters.to.save = param, model.file = FE.FE.ad.pcar,
                                         n.chains = num.chains, n.iter = num.iter, 
                                         n.burnin = num.burnin, bugs.directory = bugs.dir, 
                                         DIC = FALSE))
 
-resulta.fe.fe.pcar.ad<- result 
-t.resulta.fe.fe.pcar.ad<- t.result
+results.fe.fe.pcar.ad <- result 
+t.results.fe.fe.pcar.ad <- t.result
 
 ## rm
 rm(list = c("cl", "initials", "param", "result", "t.result"))
@@ -140,29 +137,29 @@ param <- c("smr.prob", "espat.prob", "etemp.prob", "eint.prob","gamma","SMR", "l
            "mu", "Theta", "M", "Sigma.s", "Corre.s", "Gam", "Mg", "Sigma.t", "Corre.t", 
            "Espat", "Etemp", "Eint", "Zet", "sdZet")
 
-t.result <- system.time(result <- Pbugs(program="winbugs", data = data, inits = initials, 
+t.result <- system.time(result <- pbugs(program="winbugs", data = data, inits = initials, 
                                         parameters.to.save = param, model.file = FE.FE.t1.pcar,
                                         n.chains = num.chains, n.iter = num.iter, 
                                         n.burnin = num.burnin, bugs.directory = bugs.dir, 
                                         DIC = FALSE))
 
-resulta.fe.fe.pcar.t1<- result 
-t.resulta.fe.fe.pcar.t1<- t.result
+results.fe.fe.pcar.t1 <- result 
+t.results.fe.fe.pcar.t1 <- t.result
 
 ## rm
 rm(list = c("cl", "initials", "param", "result", "t.result"))
 rm("data")
 
+
 ########################################
 ## Type II                            ##
 ########################################
-data<-list(Nyears=Nyears, Ndiseases=Ndiseases, Nareas=Nareas, O=O, E=E, 
-           adj=unlist(nb), num=sapply(nb,length), M.car.s= 1/sapply(nb,length),
-           C.car.s= rep(1/sapply(nb,length), sapply(nb,length)), 
-           adjt=unlist(nbt), weightst=rep(1,length(unlist(nbt))), numt=sapply(nbt,length),
-           adj.zt=unlist(nbt), weights.zt=rep(1,length(unlist(nbt))), num.zt=sapply(nbt,length))
+data <- list(Nyears=Nyears, Ndiseases=Ndiseases, Nareas=Nareas, O=O, E=E, 
+             adj=unlist(nb), num=sapply(nb,length), M.car.s= 1/sapply(nb,length),
+             C.car.s= rep(1/sapply(nb,length), sapply(nb,length)), 
+             adjt=unlist(nbt), weightst=rep(1,length(unlist(nbt))), numt=sapply(nbt,length),
+             adj.zt=unlist(nbt), weights.zt=rep(1,length(unlist(nbt))), num.zt=sapply(nbt,length))
 
-## FE.FE.t2.pcar
 initials <- function(){list(mu=rnorm(Ndiseases,0,0.1), 
                             Spatial=matrix(rnorm(Nareas*Ndiseases), nrow=Ndiseases, ncol=Nareas),
                             M=matrix(rnorm(Ndiseases), nrow=Ndiseases, ncol=Ndiseases), 
@@ -175,28 +172,28 @@ param <- c("smr.prob", "espat.prob", "etemp.prob", "eint.prob","gamma","SMR", "l
            "mu", "Theta", "M", "Sigma.s", "Corre.s", "Gam", "Mg", "Sigma.t", "Corre.t",
            "Espat", "Etemp", "Eint", "Zet", "sdZet")
 
-t.result <- system.time(result <- Pbugs(program="winbugs", data = data, inits = initials, 
+t.result <- system.time(result <- pbugs(program="winbugs", data = data, inits = initials, 
                                         parameters.to.save = param, model.file = FE.FE.t2.pcar,
                                         n.chains = num.chains, n.iter = num.iter, 
                                         n.burnin = num.burnin, bugs.directory = bugs.dir, DIC = FALSE))
 
-resulta.fe.fe.pcar.t2<- result 
-t.resulta.fe.fe.pcar.t2<- t.result
+results.fe.fe.pcar.t2 <- result 
+t.results.fe.fe.pcar.t2 <- t.result
 
 ## rm
 rm(list = c("cl", "initials", "param", "result", "t.result"))
 rm("data")
 
+
 ########################################
 ## Type III                           ##
 ########################################
-data<-list(Nyears=Nyears, Ndiseases=Ndiseases, Nareas=Nareas, O=O, E=E, 
-           adj=unlist(nb), num=sapply(nb,length), M.car.s= 1/sapply(nb,length),
-           C.car.s= rep(1/sapply(nb,length), sapply(nb,length)), 
-           adjt=unlist(nbt), weightst=rep(1,length(unlist(nbt))), numt=sapply(nbt,length), 
-           adj.zs=unlist(nb), weights.zs=rep(1,length(unlist(nb))), num.zs=sapply(nb,length))
+data <- list(Nyears=Nyears, Ndiseases=Ndiseases, Nareas=Nareas, O=O, E=E, 
+             adj=unlist(nb), num=sapply(nb,length), M.car.s= 1/sapply(nb,length),
+             C.car.s= rep(1/sapply(nb,length), sapply(nb,length)), 
+             adjt=unlist(nbt), weightst=rep(1,length(unlist(nbt))), numt=sapply(nbt,length), 
+             adj.zs=unlist(nb), weights.zs=rep(1,length(unlist(nb))), num.zs=sapply(nb,length))
 
-## FE.FE.t3.pcar
 initials <- function(){list(mu=rnorm(Ndiseases,0,0.1), 
                             Spatial=matrix(rnorm(Nareas*Ndiseases), nrow=Ndiseases, ncol=Nareas), 
                             M=matrix(rnorm(Ndiseases), nrow=Ndiseases, ncol=Ndiseases),
@@ -209,30 +206,35 @@ param <- c("smr.prob", "espat.prob", "etemp.prob", "eint.prob","gamma","SMR", "l
            "mu", "Theta", "M", "Sigma.s", "Corre.s", "Gam","Mg", "Sigma.t", "Corre.t", 
            "Espat","Etemp", "Eint", "Zet", "sdZet")
 
-t.result <- system.time(result <- Pbugs(program="winbugs", data = data, inits = initials, 
+t.result <- system.time(result <- pbugs(program="winbugs", data = data, inits = initials, 
                                         parameters.to.save = param, model.file = FE.FE.t3.pcar,
                                         n.chains = num.chains, n.iter = num.iter, 
                                         n.burnin = num.burnin, bugs.directory = bugs.dir, 
                                         DIC = FALSE))
 
-resulta.fe.fe.pcar.t3<- result 
-t.resulta.fe.fe.pcar.t3<- t.result
+results.fe.fe.pcar.t3 <- result 
+t.results.fe.fe.pcar.t3 <- t.result
 
 ## rm
 rm(list = c("cl", "initials", "param", "result", "t.result"))
 rm("data")
 
+
 ########################################
 ## Type IV                            ##
 ########################################
-data<-list(Nyears=Nyears, Ndiseases=Ndiseases, Nareas=Nareas, O=O, E=E, 
-           adj=unlist(nb), num=sapply(nb,length), M.car.s= 1/sapply(nb,length), 
-           C.car.s= rep(1/sapply(nb,length), sapply(nb,length)), 
-           adjt=unlist(nbt), weightst=rep(1,length(unlist(nbt))), numt=sapply(nbt,length), 
-           adj.zs=unlist(nb), weights.zs=rep(1,length(unlist(nb))), num.zs=sapply(nb,length), 
-           Mzz=Mzz)
+D <- diff(diag(Nyears), differences=1)
+Rt <- t(D)%*%D
+Rt.ginv <- MASS::ginv(Rt)
+Mzz <- chol(Rt.ginv)
 
-## FE.FE.t4.pcar
+data <- list(Nyears=Nyears, Ndiseases=Ndiseases, Nareas=Nareas, O=O, E=E, 
+             adj=unlist(nb), num=sapply(nb,length), M.car.s= 1/sapply(nb,length), 
+             C.car.s= rep(1/sapply(nb,length), sapply(nb,length)), 
+             adjt=unlist(nbt), weightst=rep(1,length(unlist(nbt))), numt=sapply(nbt,length), 
+             adj.zs=unlist(nb), weights.zs=rep(1,length(unlist(nb))), num.zs=sapply(nb,length), 
+             Mzz=Mzz)
+  
 initials <- function(){list(mu=rnorm(Ndiseases,0,0.1), 
                             Spatial=matrix(rnorm(Nareas*Ndiseases), nrow=Ndiseases, ncol=Nareas), 
                             M=matrix(rnorm(Ndiseases), nrow=Ndiseases, ncol=Ndiseases), 
@@ -245,36 +247,34 @@ param <- c("smr.prob", "espat.prob", "etemp.prob", "eint.prob","gamma","SMR", "l
            "mu", "Theta", "M", "Sigma.s", "Corre.s", "Gam","Mg", "Sigma.t", "Corre.t",
            "Espat","Etemp", "Eint", "Zet", "sdZet")
 
-t.result <- system.time(result <- Pbugs(program="winbugs", data = data, inits = initials, 
+t.result <- system.time(result <- pbugs(program="winbugs", data = data, inits = initials, 
                                         parameters.to.save = param, model.file = FE.FE.t4.pcar,
                                         n.chains = num.chains, n.iter = num.iter, 
                                         n.burnin = num.burnin, bugs.directory = bugs.dir, 
                                         DIC = FALSE))
 
-resulta.fe.fe.pcar.t4<- result
-t.resulta.fe.fe.pcar.t4<- t.result
+results.fe.fe.pcar.t4 <- result
+t.results.fe.fe.pcar.t4 <- t.result
 
 ## rm
 rm(list = c("cl", "initials", "param", "result", "t.result"))
 rm("data")
 
+
 ########################################
-## save                               ##
+## Save results                       ##
 ########################################
-resulta.winbugs.pcar.fe<- list(pcar.ad.fe=resulta.fe.fe.pcar.ad,
-                               pcar.t1.fe=resulta.fe.fe.pcar.t1,
-                               pcar.t2.fe=resulta.fe.fe.pcar.t2,
-                               pcar.t3.fe=resulta.fe.fe.pcar.t3,
-                               pcar.t4.fe=resulta.fe.fe.pcar.t4)
+results.winbugs.pcar.fe <- list(pcar.ad.fe=results.fe.fe.pcar.ad,
+                                pcar.t1.fe=results.fe.fe.pcar.t1,
+                                pcar.t2.fe=results.fe.fe.pcar.t2,
+                                pcar.t3.fe=results.fe.fe.pcar.t3,
+                                pcar.t4.fe=results.fe.fe.pcar.t4)
 
-t.resulta.winbugs.pcar.fe<- list(pcar.ad.fe=t.resulta.fe.fe.pcar.ad,
-                                 pcar.t1.fe=t.resulta.fe.fe.pcar.t1,
-                                 pcar.t2.fe=t.resulta.fe.fe.pcar.t2,
-                                 pcar.t3.fe=t.resulta.fe.fe.pcar.t3,
-                                 pcar.t4.fe=t.resulta.fe.fe.pcar.t4)
-
-save(resulta.winbugs.pcar.fe, t.resulta.winbugs.pcar.fe, 
-     file =paste0("resul/",gsub("\\.", "_", "resulta.winbugs.pcar.fe"),".RData"))
-
-################################################################################
-################################################################################
+t.results.winbugs.pcar.fe <- list(pcar.ad.fe=t.results.fe.fe.pcar.ad,
+                                  pcar.t1.fe=t.results.fe.fe.pcar.t1,
+                                  pcar.t2.fe=t.results.fe.fe.pcar.t2,
+                                  pcar.t3.fe=t.results.fe.fe.pcar.t3,
+                                  pcar.t4.fe=t.results.fe.fe.pcar.t4)
+ 
+save(results.winbugs.pcar.fe, t.results.winbugs.pcar.fe, 
+     file =paste0("results/",gsub("\\.", "_", "results.winbugs.pcar.fe"),".RData"))
