@@ -63,27 +63,27 @@ source("functions/MCAR_INLA_ST.R")      ## Fits INLA models using different prio
 ## Additive 
 icar.ad <- MCAR_INLA_ST(carto=carto_UP, data=data, ID.area="dist", ID.year="year", ID.disease="Crime",
                         O="obs", E="exp", spatial="intrinsic", temporal="rw1", interaction="none",
-                        strategy="gaussian")
+                        strategy="simplified.laplace")
 
 ## Type I
 icar.t1 <- MCAR_INLA_ST(carto=carto_UP, data=data, ID.area="dist", ID.year="year", ID.disease="Crime",
                         O="obs", E="exp", spatial="intrinsic", temporal="rw1", interaction="TypeI",
-                        strategy="gaussian")
+                        strategy="simplified.laplace")
 
 ## Type II
 icar.t2 <- MCAR_INLA_ST(carto=carto_UP, data=data, ID.area="dist", ID.year="year", ID.disease="Crime",
                         O="obs", E="exp", spatial="intrinsic", temporal="rw1", interaction="TypeII",
-                        strategy="gaussian")
+                        strategy="simplified.laplace")
 
 ## Type III
 icar.t3 <- MCAR_INLA_ST(carto=carto_UP, data=data, ID.area="dist", ID.year="year", ID.disease="Crime",
                         O="obs", E="exp", spatial="intrinsic", temporal="rw1", interaction="TypeIII",
-                        strategy="gaussian")
+                        strategy="simplified.laplace")
 
 ## Type IV
 icar.t4 <- MCAR_INLA_ST(carto=carto_UP, data=data, ID.area="dist", ID.year="year", ID.disease="Crime",
                         O="obs", E="exp", spatial="intrinsic", temporal="rw1", interaction="TypeIV",
-                        strategy="gaussian")
+                        strategy="simplified.laplace")
 
 
 ## Save the models ##
@@ -99,27 +99,27 @@ save(MODELS.inla.icar, file=paste0("./results/", gsub("\\.", "_", "MODELS.inla.i
 ## Additive 
 lcar.ad <- MCAR_INLA_ST(carto=carto_UP, data=data, ID.area="dist", ID.year="year", ID.disease="Crime",
                         O="obs", E="exp", spatial="Leroux", temporal="rw1", interaction="none",
-                        strategy="gaussian")
+                        strategy="simplified.laplace")
 
 ## Type I
 lcar.t1 <- MCAR_INLA_ST(carto=carto_UP, data=data, ID.area="dist", ID.year="year", ID.disease="Crime",
                         O="obs", E="exp", spatial="Leroux", temporal="rw1", interaction="TypeI",
-                        strategy="gaussian")
+                        strategy="simplified.laplace")
 
 ## Type II
 lcar.t2 <- MCAR_INLA_ST(carto=carto_UP, data=data, ID.area="dist", ID.year="year", ID.disease="Crime",
                         O="obs", E="exp", spatial="Leroux", temporal="rw1", interaction="TypeII",
-                        strategy="gaussian")
+                        strategy="simplified.laplace")
 
 ## Type III
 lcar.t3 <- MCAR_INLA_ST(carto=carto_UP, data=data, ID.area="dist", ID.year="year", ID.disease="Crime",
                         O="obs", E="exp", spatial="Leroux", temporal="rw1", interaction="TypeIII",
-                        strategy="gaussian")
+                        strategy="simplified.laplace")
 
 ## Type IV
 lcar.t4 <- MCAR_INLA_ST(carto=carto_UP, data=data, ID.area="dist", ID.year="year", ID.disease="Crime",
                         O="obs", E="exp", spatial="Leroux", temporal="rw1", interaction="TypeIV",
-                        strategy="gaussian")
+                        strategy="simplified.laplace")
 
 
 ## Save the models ##
@@ -136,27 +136,27 @@ save(MODELS.inla.lcar, file=paste0("./results/", gsub("\\.", "_", "MODELS.inla.l
 ## Additive 
 pcar.ad <- MCAR_INLA_ST(carto=carto_UP, data=data, ID.area="dist", ID.year="year", ID.disease="Crime",
                         O="obs", E="exp", spatial="proper", temporal="rw1", interaction="none",
-                        strategy="gaussian")
+                        strategy="simplified.laplace")
 
 ## Type I
 pcar.t1 <- MCAR_INLA_ST(carto=carto_UP, data=data, ID.area="dist", ID.year="year", ID.disease="Crime",
                         O="obs", E="exp", spatial="proper", temporal="rw1", interaction="TypeI",
-                        strategy="gaussian")
+                        strategy="simplified.laplace")
 
 ## Type II
 pcar.t2 <- MCAR_INLA_ST(carto=carto_UP, data=data, ID.area="dist", ID.year="year", ID.disease="Crime",
                         O="obs", E="exp", spatial="proper", temporal="rw1", interaction="TypeII",
-                        strategy="gaussian")
+                        strategy="simplified.laplace")
 
 ## Type III
 pcar.t3 <- MCAR_INLA_ST(carto=carto_UP, data=data, ID.area="dist", ID.year="year", ID.disease="Crime",
                         O="obs", E="exp", spatial="proper", temporal="rw1", interaction="TypeIII",
-                        strategy="gaussian")
+                        strategy="simplified.laplace")
 
 ## Type IV
 pcar.t4 <- MCAR_INLA_ST(carto=carto_UP, data=data, ID.area="dist", ID.year="year", ID.disease="Crime",
                         O="obs", E="exp", spatial="proper", temporal="rw1", interaction="TypeIV",
-                        strategy="gaussian")
+                        strategy="simplified.laplace")
 
 
 ## Save the models ##
