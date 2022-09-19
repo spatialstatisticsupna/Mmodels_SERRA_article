@@ -4,7 +4,7 @@ This folder contains the necessary R functions to fit to fit most of the multiva
 
 The original code [(Version v1)](https://github.com/spatialstatisticsupna/Mmodels_SERRA_article/releases/tag/v1) has been updated to make it compatible with R-INLA 21.11.22 or newer versions.
 
-In addition, a new reparameterization of the covariance matrix of the M-models based its Barlett decomposition is defined for models fitted with INLA. 
+In addition, the Barlett decomposition of the between-crime spatial and temporal covariance matrices is used for models fitted with INLA.
 
 The ```dataMmodel.RData``` file contains the following R objects:
 
