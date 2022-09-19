@@ -8,7 +8,7 @@ In addition, a new reparameterization of the covariance matrix of the M-models b
 
 The ```dataMmodel.RData``` file contains the following R objects:
 
-- ```data_UP```: contains the data set used. It is a list with two `data.frame` objects (corresponding to **rape** and **dowry** death data) with the following variables,
+- ```data_UP```: contains the data set used. It is a list with two `data.frame` objects (corresponding to **rape** and **dowry death** data) with the following variables,
 	- **dist**: Districts
 	- **state**: State (Uttar Pradesh)
 	- **year**: Years (from 2001 to 2014)
