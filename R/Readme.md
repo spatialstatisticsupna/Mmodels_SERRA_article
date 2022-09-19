@@ -2,7 +2,7 @@
 
 This folder contains the necessary R functions to fit to fit most of the multivariate spatio-temporal models described in Vicente et al. (2020) and reproduce results.
 
-The original code [(Version v1)](https://github.com/spatialstatisticsupna/Mmodels_SERRA_article/releases/tag/v1).) has been updated to make it compatible with R-INLA 21.11.22 or newer versions.
+The original code [(Version v1)](https://github.com/spatialstatisticsupna/Mmodels_SERRA_article/releases/tag/v1) has been updated to make it compatible with R-INLA 21.11.22 or newer versions.
 
 In addition, a new reparameterization of the covariance matrix of the M-models based its Barlett decomposition is defined for models fitted with INLA. 
 
