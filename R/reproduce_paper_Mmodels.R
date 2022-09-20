@@ -287,9 +287,6 @@ Map.risk2 <- tm_shape(carto.dowry) +
             legend.outside.size=0.2, outer.margins=c(0.02,0.01,0.02,0.01)) + 
   tm_facets(nrow=3, ncol=5)
 
-tmap_save(Map.risk1, file="figures/figure_6a.pdf")
-tmap_save(Map.risk2, file="figures/figure_7a.pdf")
-
 
 ## Maps of posterior exceedence probabilities ##
 probs <- matrix(1-Model$summary.fitted.values$`1 cdf`,S*T,J,byrow=F)
