@@ -221,7 +221,7 @@ MCAR_INLA_ST <- function(carto=NULL, data=NULL, ID.area=NULL, ID.year=NULL, ID.d
                 control.compute=list(dic=TRUE, cpo=TRUE, waic=TRUE, config=TRUE, return.marginals.predictor=TRUE),
                 control.inla=list(strategy=strategy))
   
-  Model$Mmodel <- list(spatial=spatial, temporal=spatial, interaction=interaction)
+  Model$Mmodel <- list(spatial=spatial, temporal=temporal, interaction=interaction)
   
   
   ## Compute spatial/temporal between-disease correlations and marginal variances ##
