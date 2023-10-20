@@ -9,18 +9,6 @@ options(dplyr.summarise.inform = FALSE)
 MCAR_INLA_ST <- function(carto=NULL, data=NULL, ID.area=NULL, ID.year=NULL, ID.disease=NULL,
                          O=NULL, E=NULL, W=NULL, spatial="intrinsic", temporal="rw1",
                          interaction="TypeIV", strategy="simplified.laplace"){
-  carto=carto_UP
-  data=data
-  ID.area="dist"
-  ID.year="year"
-  ID.disease="Crime"
-  O="obs"
-  E="exp"
-  W=NULL
-  spatial="intrinsic"
-  temporal="rw1"
-  interaction="TypeII"
-  strategy="simplified.laplace"
   
   ## Check for errors ##
   if(is.null(carto))
