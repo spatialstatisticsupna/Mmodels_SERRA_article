@@ -18,6 +18,8 @@ library(sf)
 library(tmap)
 library(tmaptools)
  
+setwd(dirname(rstudioapi::getSourceEditorContext()$path))
+
 
 ########################################
 ## 1) Load data and cartography files ##

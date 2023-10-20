@@ -1,5 +1,6 @@
 options(dplyr.summarise.inform = FALSE)
 
+
 ######################################################################################
 ## Fit a spatial-temporal multivariate Poisson mixed model to areal count data,     ##
 ## where dependence between spatial/temporal patterns of the diseases is addressed  ##
@@ -8,6 +9,18 @@ options(dplyr.summarise.inform = FALSE)
 MCAR_INLA_ST <- function(carto=NULL, data=NULL, ID.area=NULL, ID.year=NULL, ID.disease=NULL,
                          O=NULL, E=NULL, W=NULL, spatial="intrinsic", temporal="rw1",
                          interaction="TypeIV", strategy="simplified.laplace"){
+  carto=carto_UP
+  data=data
+  ID.area="dist"
+  ID.year="year"
+  ID.disease="Crime"
+  O="obs"
+  E="exp"
+  W=NULL
+  spatial="intrinsic"
+  temporal="rw1"
+  interaction="TypeII"
+  strategy="simplified.laplace"
   
   ## Check for errors ##
   if(is.null(carto))
@@ -64,7 +77,7 @@ MCAR_INLA_ST <- function(carto=NULL, data=NULL, ID.area=NULL, ID.year=NULL, ID.d
   ## Define spatial adjacency/structure matrix ##
   if(is.null(W)){
     carto.nb <- poly2nb(carto)
-    Ws <- as(nb2listw(carto.nb, style="B"),"CsparseMatrix")
+    Ws <- as(nb2mat(carto.nb, style="B"),"Matrix")
   }else{
     carto.nb <- mat2listw(W, style="B")$neighbours
     Ws <- W
@@ -73,8 +86,8 @@ MCAR_INLA_ST <- function(carto=NULL, data=NULL, ID.area=NULL, ID.year=NULL, ID.d
   if(carto.nc!=1) stop(sprintf("'carto' object has %d disjoint connected subgraphs",carto.nc))
   
   S <- length(carto.nb)
-  Rs <- inla.as.sparse(Diagonal(S,colSums(Ws))-Ws)
-  Rs.Leroux <- inla.as.sparse(Diagonal(S)-Rs)
+  Rs <- as(Diagonal(S,colSums(Ws))-Ws,"Matrix")
+  Rs.Leroux <- as(Diagonal(S)-Rs,"Matrix")
   
   
   ## Define temporal adjacency/structure matrix ##
@@ -82,7 +95,7 @@ MCAR_INLA_ST <- function(carto=NULL, data=NULL, ID.area=NULL, ID.year=NULL, ID.d
   if(temporal=="rw1") dif <- 1
   if(temporal=="rw2") dif <- 2
   D <- diff(diag(T), differences=dif)
-  Rt <- inla.as.sparse(t(D)%*%D)
+  Rt <- as(t(D)%*%D,"Matrix")
   
   Wt <- -Rt
   diag(Wt) <- 0

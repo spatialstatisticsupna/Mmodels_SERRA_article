@@ -12,6 +12,9 @@
 rm(list=ls())
 library(INLA)
 
+setwd(dirname(rstudioapi::getSourceEditorContext()$path))
+
+
 ## Some necessary packages ##
 packages <- c("dplyr","sf","spdep","spatialreg","fastDummies")
 
